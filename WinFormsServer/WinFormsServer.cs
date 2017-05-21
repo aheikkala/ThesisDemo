@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNet.SignalR;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Hosting;
+﻿using Microsoft.Owin.Hosting;
 using Owin;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SignalRChat
+namespace ThesisDemo
 {
     /// <summary>
     /// WinForms host for a SignalR server. The host can stop and start the SignalR
@@ -93,37 +91,5 @@ namespace SignalRChat
             }
         }
     }
-    /// <summary>
-    /// Used by OWIN's startup process. 
-    /// </summary>
-    class Startup
-    {
-        public void Configuration(IAppBuilder app)
-        {
-            app.UseCors(CorsOptions.AllowAll);
-            app.MapSignalR();
-        }
-    }
-    /// <summary>
-    /// Echoes messages sent using the Send message by calling the
-    /// addMessage method on the client. Also reports to the console
-    /// when clients connect and disconnect.
-    /// </summary>
-    public class MyHub : Hub
-    {
-        public void Send(string name, string message)
-        {
-            Clients.All.addMessage(name, message);
-        }
-        public override Task OnConnected()
-        {
-            Program.MainForm.WriteToConsole("Client connected: " + Context.ConnectionId);
-            return base.OnConnected();
-        }
-        public override Task OnDisconnected()
-        {
-            Program.MainForm.WriteToConsole("Client disconnected: " + Context.ConnectionId);
-            return base.OnDisconnected();
-        }
-    }
+    
 }

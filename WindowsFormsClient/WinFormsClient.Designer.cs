@@ -1,4 +1,4 @@
-﻿namespace WinFormsClient
+﻿namespace ThesisDemo
 {
     partial class WinFormsClient
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace WinFormsClient
+namespace ThesisDemo
 {
     static class Program
     {

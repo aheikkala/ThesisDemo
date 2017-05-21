@@ -1,4 +1,4 @@
-﻿namespace SignalRChat
+﻿namespace ThesisDemo
 {
     partial class WinFormsServer
     {

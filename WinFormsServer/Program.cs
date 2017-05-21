@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SignalRChat
+namespace ThesisDemo
 {
     public static class Program
     {

@@ -3,7 +3,7 @@ using System;
 using System.Net.Http;
 using System.Windows.Forms;
 
-namespace WinFormsClient
+namespace ThesisDemo
 {
     /// <summary>
     /// SignalR client hosted in a WinForms application. The client
