@@ -7,7 +7,7 @@ using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Owin;
 using Microsoft.Owin;
-[assembly: OwinStartup(typeof(ThesisDemo.Startup))]
+//[assembly: OwinStartup(typeof(ThesisDemo.Startup))]
 
 namespace ThesisDemo
 {

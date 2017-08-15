@@ -53,7 +53,7 @@ namespace ThesisDemo
         {
             try
             {
-                SignalR = WebApp.Start(ServerURI);
+                SignalR = WebApp.Start<Startup>(ServerURI);
             }
             catch (TargetInvocationException)
             {
