@@ -1,6 +1,6 @@
 ﻿namespace ThesisDemo
 {
-    partial class WinFormsClient
+    partial class WinFormsClient 
     {
         /// <summary>
         /// Required designer variable.
@@ -33,9 +33,9 @@
             this.RichTextBoxConsole = new System.Windows.Forms.RichTextBox();
             this.ChatPanel = new System.Windows.Forms.Panel();
             this.SignInPanel = new System.Windows.Forms.Panel();
+            this.comboBoxSelectUser = new System.Windows.Forms.ComboBox();
             this.StatusText = new System.Windows.Forms.Label();
             this.SignInButton = new System.Windows.Forms.Button();
-            this.UserNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ChatPanel.SuspendLayout();
             this.SignInPanel.SuspendLayout();
@@ -54,6 +54,7 @@
             // 
             // TextBoxMessage
             // 
+            this.TextBoxMessage.BackColor = System.Drawing.Color.GhostWhite;
             this.TextBoxMessage.Location = new System.Drawing.Point(8, 12);
             this.TextBoxMessage.Name = "TextBoxMessage";
             this.TextBoxMessage.Size = new System.Drawing.Size(400, 20);
@@ -61,6 +62,8 @@
             // 
             // RichTextBoxConsole
             // 
+            this.RichTextBoxConsole.BackColor = System.Drawing.Color.GhostWhite;
+            this.RichTextBoxConsole.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RichTextBoxConsole.Location = new System.Drawing.Point(8, 38);
             this.RichTextBoxConsole.Name = "RichTextBoxConsole";
             this.RichTextBoxConsole.ReadOnly = true;
@@ -70,32 +73,46 @@
             // 
             // ChatPanel
             // 
-            
+            this.ChatPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ChatPanel.BackColor = System.Drawing.SystemColors.Control;
             this.ChatPanel.Controls.Add(this.RichTextBoxConsole);
             this.ChatPanel.Controls.Add(this.TextBoxMessage);
             this.ChatPanel.Controls.Add(this.ButtonSend);
-            this.ChatPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ChatPanel.Location = new System.Drawing.Point(0, 0);
+            this.ChatPanel.Location = new System.Drawing.Point(0, 65);
             this.ChatPanel.Name = "ChatPanel";
-            this.ChatPanel.Size = new System.Drawing.Size(501, 513);
+            this.ChatPanel.Size = new System.Drawing.Size(844, 488);
             this.ChatPanel.TabIndex = 4;
             this.ChatPanel.Visible = false;
             // 
             // SignInPanel
             // 
+            this.SignInPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SignInPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.SignInPanel.Controls.Add(this.comboBoxSelectUser);
             this.SignInPanel.Controls.Add(this.StatusText);
             this.SignInPanel.Controls.Add(this.SignInButton);
-            this.SignInPanel.Controls.Add(this.UserNameTextBox);
             this.SignInPanel.Controls.Add(this.label1);
-            this.SignInPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignInPanel.Location = new System.Drawing.Point(0, 0);
+            this.SignInPanel.Location = new System.Drawing.Point(0, 65);
             this.SignInPanel.Name = "SignInPanel";
-            this.SignInPanel.Size = new System.Drawing.Size(501, 513);
+            this.SignInPanel.Size = new System.Drawing.Size(844, 488);
             this.SignInPanel.TabIndex = 4;
+            // 
+            // comboBoxSelectUser
+            // 
+            this.comboBoxSelectUser.FormattingEnabled = true;
+            this.comboBoxSelectUser.Location = new System.Drawing.Point(8, 35);
+            this.comboBoxSelectUser.Name = "comboBoxSelectUser";
+            this.comboBoxSelectUser.Size = new System.Drawing.Size(174, 21);
+            this.comboBoxSelectUser.TabIndex = 7;
             // 
             // StatusText
             // 
-            this.StatusText.Location = new System.Drawing.Point(12, 59);
+            this.StatusText.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.StatusText.Location = new System.Drawing.Point(8, 68);
             this.StatusText.Name = "StatusText";
             this.StatusText.Size = new System.Drawing.Size(477, 13);
             this.StatusText.TabIndex = 6;
@@ -104,20 +121,13 @@
             // 
             // SignInButton
             // 
-            this.SignInButton.Location = new System.Drawing.Point(414, 22);
+            this.SignInButton.Location = new System.Drawing.Point(188, 35);
             this.SignInButton.Name = "SignInButton";
-            this.SignInButton.Size = new System.Drawing.Size(75, 23);
+            this.SignInButton.Size = new System.Drawing.Size(75, 21);
             this.SignInButton.TabIndex = 5;
             this.SignInButton.Text = "Sign In";
             this.SignInButton.UseVisualStyleBackColor = true;
             this.SignInButton.Click += new System.EventHandler(this.SignInButton_Click);
-            // 
-            // UserNameTextBox
-            // 
-            this.UserNameTextBox.Location = new System.Drawing.Point(7, 24);
-            this.UserNameTextBox.Name = "UserNameTextBox";
-            this.UserNameTextBox.Size = new System.Drawing.Size(401, 20);
-            this.UserNameTextBox.TabIndex = 4;
             // 
             // label1
             // 
@@ -133,14 +143,14 @@
             this.AcceptButton = this.ButtonSend;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(501, 513);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(844, 552);
             this.Controls.Add(this.ChatPanel);
             this.Controls.Add(this.SignInPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(517, 552);
             this.Name = "WinFormsClient";
-            this.Text = "WinForms SignalR Client";
+            this.Text = "Chat App";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormsClient_FormClosing);
             this.ChatPanel.ResumeLayout(false);
             this.ChatPanel.PerformLayout();
@@ -159,9 +169,8 @@
         private System.Windows.Forms.Panel SignInPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button SignInButton;
-        private System.Windows.Forms.TextBox UserNameTextBox;
         private System.Windows.Forms.Label StatusText;
-
+        private System.Windows.Forms.ComboBox comboBoxSelectUser;
     }
 }
 

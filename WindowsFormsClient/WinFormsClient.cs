@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Windows.Forms;
+using MaterialSkin.Controls;
+using MaterialSkin.Animations;
+using MaterialSkin;
 
 namespace ThesisDemo
 {
@@ -11,20 +15,25 @@ namespace ThesisDemo
     /// to not block the UI thread, and send chat messages to all connected 
     /// clients whether they are hosted in WinForms, WPF, or a web application.
     /// </summary>
-    public partial class WinFormsClient : Form
+    public partial class WinFormsClient : MaterialForm
     {
         /// <summary>
         /// This name is simply added to sent messages to identify the user; this 
         /// sample does not include authentication.
         /// </summary>
         private String UserName { get; set; }
+        //private List<string> ListUsers { get; set; }
+        private String[] Users = new String[] { "Apsu", "Green", "Yellow" };
         private IHubProxy HubProxy { get; set; }
         const string ServerURI = "http://localhost:8080/signalr";
         private HubConnection Connection { get; set; }
-        
-        internal WinFormsClient()
+
+        public WinFormsClient()
         {
             InitializeComponent();
+            //ListUsers.AddRange({ "Apsu", "Dude"});
+            comboBoxSelectUser.Items.AddRange(Users);
+            comboBoxSelectUser.SelectedIndex = 0;
         }
 
         private void ButtonSend_Click(object sender, EventArgs e)
@@ -83,7 +92,8 @@ namespace ThesisDemo
 
         private void SignInButton_Click(object sender, EventArgs e)
         {
-            UserName = UserNameTextBox.Text;
+            //UserName = UserNameTextBox.Text;
+            UserName = comboBoxSelectUser.GetItemText(comboBoxSelectUser.SelectedItem);
             //Connect to server (use async method to avoid blocking UI thread)
             if (!String.IsNullOrEmpty(UserName))
             {
