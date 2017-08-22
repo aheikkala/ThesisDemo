@@ -19,6 +19,8 @@ namespace ThesisDemo
             public int ID { get; set; }
             public string GroupName { get; set; }
             public DateTime CreationDate { get; set; }
+            public List<User> Users { get; set; }
+            public List<Message> Messages { get; set; }
         }
         public class Message
         {
@@ -29,23 +31,27 @@ namespace ThesisDemo
 
         public class MeContext : DbContext
         {
-            protected override void OnModelCreating(DbModelBuilder modelBuilder) { }
 
-            //public MeContext() : base(@"Data Source=DESKTOP-542OICS\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
-            public MeContext() : base(@"Data Source=PII-PARTJUH\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") { }
+            public MeContext() : base(@"Data Source=DESKTOP-542OICS\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
+            //public MeContext() : base(@"Data Source=PII-PARTJUH\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") { }
 
             //Entity set:
             public DbSet<Message> Messages { get; set; }
             public DbSet<User> Users { get; set; }
             public DbSet<Group> Groups { get; set; }
 
+            protected override void OnModelCreating(DbModelBuilder modelBuilder)
+            {
+                modelBuilder.Entity<Group>().HasMany(x => x.Users).WithMany();
+                modelBuilder.Entity<Group>().HasMany(x => x.Messages).WithRequired();
+            }
             //model
             //fuent interface      .HasRequired(x => ...)
-           
 
-         //modelBuilder.Entity<Course>() 
-         //.HasMany(t => t.Instructors)
-         //.WithMany(t => t.Courses)
+
+            //modelBuilder.Entity<Course>() 
+            //.HasMany(t => t.Instructors)
+            //.WithMany(t => t.Courses)
         }
     }
 }

@@ -44,7 +44,8 @@ namespace ThesisDemo
         {
             var msg = new Message
             {
-                Data = message
+                Data = message,
+                Timestamp = DateTime.Now
             };
             //var db = new MeContext();
             _db.Messages.Add(msg);
