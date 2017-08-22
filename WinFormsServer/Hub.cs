@@ -14,9 +14,9 @@ namespace ThesisDemo
     /// addMessage method on the client. Also reports to the console
     /// when clients connect and disconnect.
     /// </summary>
-    public class MyHub : Hub
+    public class ChatHub : Hub
     {
-        
+
         //class Message
         //{
         //    public int ID { get; set; }
@@ -29,18 +29,30 @@ namespace ThesisDemo
         //    public DbSet<Message> Messages { get; set; }
         //}
 
+        private readonly Chat _chat;
+
+        public ChatHub() : this(Chat.Instance) { }
+
+        public ChatHub(Chat chat)
+        {
+            _chat = chat;
+        }
+
 
         public void Send(string name, string message)
         {
-            var msg = new Message
-            {
-                Data = message
-            };
-            var db = new MeContext();
-            db.Messages.Add(msg);
-            db.SaveChanges();
+            //var msg = new Message
+            //{
+            //    Data = message
+            //};
+            //var db = new MeContext();
+            //db.Messages.Add(msg);
+            //db.SaveChanges();
 
-            Clients.All.addMessage(name, message);
+            //Clients.All.addMessage(name, message);
+
+            _chat.Send(name, message);
+
         }
         public override Task OnConnected()
         {

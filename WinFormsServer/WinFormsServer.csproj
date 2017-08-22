@@ -89,6 +89,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chat.cs" />
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Hub.cs" />
     <Compile Include="Startup.cs" />

@@ -23,7 +23,7 @@ namespace ThesisDemo
         /// </summary>
         private String UserName { get; set; }
         //private List<string> ListUsers { get; set; }
-        private String[] Users = new String[] { "Apsu", "Green", "Yellow" };
+        private String[] Users = new String[] { "User 1", "User 2", "User 3" };
         private IHubProxy HubProxy { get; set; }
         const string ServerURI = "http://localhost:8080/signalr";
         private HubConnection Connection { get; set; }
@@ -36,11 +36,18 @@ namespace ThesisDemo
             comboBoxSelectUser.SelectedIndex = 0;
         }
 
-        private void ButtonSend_Click(object sender, EventArgs e)
+        //private void btnSend_Click(object sender, EventArgs e)
+        //{
+        //    HubProxy.Invoke("Send", UserName, txtMessage.Text);
+        //    txtMessage.Text = String.Empty;
+        //    txtMessage.Focus();
+        //}
+
+        private void btnSend_Click(object sender, EventArgs e)
         {
-            HubProxy.Invoke("Send", UserName, TextBoxMessage.Text);
-            TextBoxMessage.Text = String.Empty;
-            TextBoxMessage.Focus();
+            HubProxy.Invoke("Send", UserName, txtMessage.Text);
+            txtMessage.Text = String.Empty;
+            txtMessage.Focus();
         }
 
         /// <summary>
@@ -51,7 +58,7 @@ namespace ThesisDemo
         {
             Connection = new HubConnection(ServerURI);
             Connection.Closed += Connection_Closed;
-            HubProxy = Connection.CreateHubProxy("MyHub");
+            HubProxy = Connection.CreateHubProxy("ChatHub");
             //Handle incoming event from server: use Invoke to write to console from SignalR's thread
             HubProxy.On<string, string>("AddMessage", (name, message) =>
                 this.Invoke((Action)(() =>
@@ -72,8 +79,8 @@ namespace ThesisDemo
             //Activate UI
             SignInPanel.Visible = false;
             ChatPanel.Visible = true;
-            ButtonSend.Enabled = true;
-            TextBoxMessage.Focus();
+            btnSend.Enabled = true;
+            txtMessage.Focus();
             RichTextBoxConsole.AppendText("Connected to server at " + ServerURI + Environment.NewLine);
         }
 
@@ -85,7 +92,7 @@ namespace ThesisDemo
         {
             //Deactivate chat UI; show login UI. 
             this.Invoke((Action)(() => ChatPanel.Visible = false));
-            this.Invoke((Action)(() => ButtonSend.Enabled = false));
+            this.Invoke((Action)(() => btnSend.Enabled = false));
             this.Invoke((Action)(() => StatusText.Text = "You have been disconnected."));
             this.Invoke((Action)(() => SignInPanel.Visible = true));
         }
