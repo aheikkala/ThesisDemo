@@ -16,6 +16,7 @@ namespace ThesisDemo
     /// </summary>
     public class ChatHub : Hub
     {
+        private readonly static ConnectionMapping<string> _connections = new ConnectionMapping<string>();
 
         //class Message
         //{
@@ -54,13 +55,25 @@ namespace ThesisDemo
             _chat.Send(name, message);
 
         }
+
+        public List<User> GetAllUsers()
+        {
+            return _chat.GetAllUsers();
+        }
+
         public override Task OnConnected()
         {
+            string name = Context.QueryString["UserName"];
+            _connections.Add(name, Context.ConnectionId);
+
             Program.MainForm.WriteToConsole("Client connected: " + Context.ConnectionId);
             return base.OnConnected();
         }
         public override Task OnDisconnected()
         {
+            string name = Context.User.Identity.Name;
+            _connections.Remove(name, Context.ConnectionId);
+
             Program.MainForm.WriteToConsole("Client disconnected: " + Context.ConnectionId);
             return base.OnDisconnected();
         }

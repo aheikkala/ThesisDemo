@@ -40,18 +40,13 @@ namespace ThesisDemo
             public DbSet<User> Users { get; set; }
             public DbSet<Group> Groups { get; set; }
 
+            //Model:
             protected override void OnModelCreating(DbModelBuilder modelBuilder)
             {
                 modelBuilder.Entity<Group>().HasMany(x => x.Users).WithMany();
-                modelBuilder.Entity<Group>().HasMany(x => x.Messages).WithRequired();
+                //modelBuilder.Entity<Group>().HasMany(x => x.Messages).WithRequired();
+                modelBuilder.Entity<Group>().HasMany(x => x.Messages).WithMany();
             }
-            //model
-            //fuent interface      .HasRequired(x => ...)
-
-
-            //modelBuilder.Entity<Course>() 
-            //.HasMany(t => t.Instructors)
-            //.WithMany(t => t.Courses)
         }
     }
 }

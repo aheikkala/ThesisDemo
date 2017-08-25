@@ -15,6 +15,7 @@ namespace ThesisDemo
         //Singleton instance
         private readonly static Lazy<Chat> _instance = new Lazy<Chat>(() => new Chat(GlobalHost.ConnectionManager.GetHubContext<ChatHub>().Clients));
         private readonly MeContext _db = new MeContext();
+        //private readonly static ConnectionMapping<string> _connections = new ConnectionMapping<string>();
 
         private Chat(IHubConnectionContext<dynamic> clients)
         {
@@ -52,6 +53,11 @@ namespace ThesisDemo
             _db.SaveChanges();
 
             Clients.All.addMessage(name, message);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return _db.Users.ToList<User>();
         }
     }
 }

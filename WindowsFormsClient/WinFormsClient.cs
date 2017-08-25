@@ -21,8 +21,8 @@ namespace ThesisDemo
         /// This name is simply added to sent messages to identify the user; this 
         /// sample does not include authentication.
         /// </summary>
+        private Int32 UserID { get; set; }
         private String UserName { get; set; }
-        //private List<string> ListUsers { get; set; }
         private String[] Users = new String[] { "User 1", "User 2", "User 3" };
         private IHubProxy HubProxy { get; set; }
         const string ServerURI = "http://localhost:8080/signalr";
@@ -31,17 +31,9 @@ namespace ThesisDemo
         public WinFormsClient()
         {
             InitializeComponent();
-            //ListUsers.AddRange({ "Apsu", "Dude"});
             comboBoxSelectUser.Items.AddRange(Users);
             comboBoxSelectUser.SelectedIndex = 0;
         }
-
-        //private void btnSend_Click(object sender, EventArgs e)
-        //{
-        //    HubProxy.Invoke("Send", UserName, txtMessage.Text);
-        //    txtMessage.Text = String.Empty;
-        //    txtMessage.Focus();
-        //}
 
         private void btnSend_Click(object sender, EventArgs e)
         {
@@ -56,7 +48,11 @@ namespace ThesisDemo
         /// </summary>
         private async void ConnectAsync()
         {
-            Connection = new HubConnection(ServerURI);
+            Connection = new HubConnection(ServerURI, new Dictionary<string, string>
+            {
+                 { "UserName", UserName }
+            });
+
             Connection.Closed += Connection_Closed;
             HubProxy = Connection.CreateHubProxy("ChatHub");
             //Handle incoming event from server: use Invoke to write to console from SignalR's thread
@@ -77,6 +73,7 @@ namespace ThesisDemo
             }
 
             //Activate UI
+            this.Text += " - " + UserName;
             SignInPanel.Visible = false;
             ChatPanel.Visible = true;
             btnSend.Enabled = true;
@@ -100,6 +97,7 @@ namespace ThesisDemo
         private void SignInButton_Click(object sender, EventArgs e)
         {
             //UserName = UserNameTextBox.Text;
+            UserID = comboBoxSelectUser.SelectedIndex + 1;
             UserName = comboBoxSelectUser.GetItemText(comboBoxSelectUser.SelectedItem);
             //Connect to server (use async method to avoid blocking UI thread)
             if (!String.IsNullOrEmpty(UserName))

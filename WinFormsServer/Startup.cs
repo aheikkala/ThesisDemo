@@ -20,6 +20,7 @@ namespace ThesisDemo
         {
             app.UseCors(CorsOptions.AllowAll);
             app.MapSignalR();
+
         }
     }
 }
