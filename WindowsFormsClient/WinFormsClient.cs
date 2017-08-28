@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MaterialSkin.Controls;
 using MaterialSkin.Animations;
 using MaterialSkin;
+using static ThesisDemo.DatabaseConnection;
 
 namespace ThesisDemo
 {
@@ -27,6 +28,7 @@ namespace ThesisDemo
         private IHubProxy HubProxy { get; set; }
         const string ServerURI = "http://localhost:8080/signalr";
         private HubConnection Connection { get; set; }
+        private readonly MeContext _db = new MeContext();
 
         public WinFormsClient()
         {
@@ -37,7 +39,22 @@ namespace ThesisDemo
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            HubProxy.Invoke("Send", UserName, txtMessage.Text);
+            var msg = new DatabaseConnection.Message
+            {
+                Data = txtMessage.Text,
+                Timestamp = DateTime.Now
+            };
+
+            var group = _db.Groups.Find(tcGroups.SelectedTab.Tag);
+
+
+            _db.Messages.Add(msg);
+            //group.Messages.Add(msg);
+            //group.Messages = new List <DatabaseConnection.Message> {msg};
+            group.Messages.Add(msg);
+            _db.SaveChanges();
+
+            HubProxy.Invoke("Send", txtMessage.Text);
             txtMessage.Text = String.Empty;
             txtMessage.Focus();
         }
@@ -71,6 +88,8 @@ namespace ThesisDemo
                 //No connection: Don't enable Send button or show chat UI
                 return;
             }
+            //State oject stores data to be transmitted to the server 
+            HubProxy["userName"] = UserName;
 
             //Activate UI
             this.Text += " - " + UserName;
@@ -79,6 +98,14 @@ namespace ThesisDemo
             btnSend.Enabled = true;
             txtMessage.Focus();
             RichTextBoxConsole.AppendText("Connected to server at " + ServerURI + Environment.NewLine);
+
+            //var groups = _db.Groups;
+            foreach (var item in _db.Groups)
+            {
+                TabPage tb = new TabPage(item.GroupName) { Tag = item.ID};
+                tcGroups.TabPages.Add(tb);
+                tb.Controls.Add(new ucChatWindow());
+            }
         }
 
         /// <summary>
@@ -114,6 +141,24 @@ namespace ThesisDemo
             {
                 Connection.Stop();
                 Connection.Dispose();
+            }
+        }
+
+        private void btnAddGroup_Click(object sender, EventArgs e)
+        {
+            if (txtAddGroup.Text != "")
+            {
+                var group = new DatabaseConnection.Group
+                {
+                    GroupName = txtAddGroup.Text,
+                    CreationDate = DateTime.Now
+                };
+
+                _db.Groups.Add(group);
+                _db.SaveChanges();
+
+                txtAddGroup.Text = String.Empty;
+                txtAddGroup.Focus();
             }
         }
     }

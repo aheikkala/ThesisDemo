@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
-using static ThesisDemo.DatabaseConnection;
+//using static ThesisDemo.DatabaseConnection;
 
 namespace ThesisDemo
 {
@@ -14,8 +14,7 @@ namespace ThesisDemo
     {
         //Singleton instance
         private readonly static Lazy<Chat> _instance = new Lazy<Chat>(() => new Chat(GlobalHost.ConnectionManager.GetHubContext<ChatHub>().Clients));
-        private readonly MeContext _db = new MeContext();
-        //private readonly static ConnectionMapping<string> _connections = new ConnectionMapping<string>();
+        //private readonly MeContext _db = new MeContext();
 
         private Chat(IHubConnectionContext<dynamic> clients)
         {
@@ -43,21 +42,21 @@ namespace ThesisDemo
 
         public void Send(string name, string message)
         {
-            var msg = new Message
-            {
-                Data = message,
-                Timestamp = DateTime.Now
-            };
-            //var db = new MeContext();
-            _db.Messages.Add(msg);
-            _db.SaveChanges();
+            //var msg = new Message
+            //{
+            //    Data = message,
+            //    Timestamp = DateTime.Now
+            //};
+
+            //_db.Messages.Add(msg);
+            //_db.SaveChanges();
 
             Clients.All.addMessage(name, message);
         }
 
-        public List<User> GetAllUsers()
-        {
-            return _db.Users.ToList<User>();
-        }
+        //public List<User> GetAllUsers()
+        //{
+        //    return _db.Users.ToList<User>();
+        //}
     }
 }

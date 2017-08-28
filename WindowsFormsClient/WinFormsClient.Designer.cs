@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ButtonSend = new System.Windows.Forms.Button();
-            this.TextBoxMessage = new System.Windows.Forms.TextBox();
             this.RichTextBoxConsole = new System.Windows.Forms.RichTextBox();
             this.ChatPanel = new System.Windows.Forms.Panel();
             this.txtMessage = new MaterialSkin.Controls.MaterialSingleLineTextField();
@@ -43,36 +41,24 @@
             this.SignInButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
+            this.txtAddGroup = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.btnAddGroup = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.tcGroups = new MaterialSkin.Controls.MaterialTabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.ChatPanel.SuspendLayout();
             this.SignInPanel.SuspendLayout();
+            this.tcGroups.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ButtonSend
-            // 
-            this.ButtonSend.Enabled = false;
-            this.ButtonSend.Location = new System.Drawing.Point(414, 10);
-            this.ButtonSend.Name = "ButtonSend";
-            this.ButtonSend.Size = new System.Drawing.Size(75, 23);
-            this.ButtonSend.TabIndex = 1;
-            this.ButtonSend.Text = "Send";
-            this.ButtonSend.UseVisualStyleBackColor = true;
-            // 
-            // TextBoxMessage
-            // 
-            this.TextBoxMessage.BackColor = System.Drawing.Color.GhostWhite;
-            this.TextBoxMessage.Location = new System.Drawing.Point(8, 12);
-            this.TextBoxMessage.Name = "TextBoxMessage";
-            this.TextBoxMessage.Size = new System.Drawing.Size(400, 20);
-            this.TextBoxMessage.TabIndex = 2;
             // 
             // RichTextBoxConsole
             // 
             this.RichTextBoxConsole.BackColor = System.Drawing.Color.GhostWhite;
             this.RichTextBoxConsole.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.RichTextBoxConsole.Location = new System.Drawing.Point(8, 38);
+            this.RichTextBoxConsole.Location = new System.Drawing.Point(540, 281);
             this.RichTextBoxConsole.Name = "RichTextBoxConsole";
             this.RichTextBoxConsole.ReadOnly = true;
-            this.RichTextBoxConsole.Size = new System.Drawing.Size(481, 288);
+            this.RichTextBoxConsole.Size = new System.Drawing.Size(481, 223);
             this.RichTextBoxConsole.TabIndex = 3;
             this.RichTextBoxConsole.Text = "";
             // 
@@ -82,14 +68,16 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.ChatPanel.Controls.Add(this.materialTabSelector1);
+            this.ChatPanel.Controls.Add(this.tcGroups);
+            this.ChatPanel.Controls.Add(this.btnAddGroup);
+            this.ChatPanel.Controls.Add(this.txtAddGroup);
             this.ChatPanel.Controls.Add(this.txtMessage);
             this.ChatPanel.Controls.Add(this.btnSend);
             this.ChatPanel.Controls.Add(this.RichTextBoxConsole);
-            this.ChatPanel.Controls.Add(this.TextBoxMessage);
-            this.ChatPanel.Controls.Add(this.ButtonSend);
             this.ChatPanel.Location = new System.Drawing.Point(0, 65);
             this.ChatPanel.Name = "ChatPanel";
-            this.ChatPanel.Size = new System.Drawing.Size(844, 488);
+            this.ChatPanel.Size = new System.Drawing.Size(1044, 571);
             this.ChatPanel.TabIndex = 4;
             this.ChatPanel.Visible = false;
             // 
@@ -97,7 +85,7 @@
             // 
             this.txtMessage.Depth = 0;
             this.txtMessage.Hint = "";
-            this.txtMessage.Location = new System.Drawing.Point(10, 332);
+            this.txtMessage.Location = new System.Drawing.Point(542, 510);
             this.txtMessage.MaxLength = 32767;
             this.txtMessage.MouseState = MaterialSkin.MouseState.HOVER;
             this.txtMessage.Name = "txtMessage";
@@ -116,7 +104,7 @@
             this.btnSend.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSend.Depth = 0;
             this.btnSend.Icon = null;
-            this.btnSend.Location = new System.Drawing.Point(429, 332);
+            this.btnSend.Location = new System.Drawing.Point(961, 510);
             this.btnSend.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSend.Name = "btnSend";
             this.btnSend.Primary = true;
@@ -142,7 +130,7 @@
             this.SignInPanel.Controls.Add(this.materialDivider1);
             this.SignInPanel.Location = new System.Drawing.Point(0, 65);
             this.SignInPanel.Name = "SignInPanel";
-            this.SignInPanel.Size = new System.Drawing.Size(844, 488);
+            this.SignInPanel.Size = new System.Drawing.Size(1044, 571);
             this.SignInPanel.TabIndex = 4;
             // 
             // lblAddUser
@@ -239,13 +227,76 @@
             this.materialDivider1.TabIndex = 9;
             this.materialDivider1.Text = "materialDivider1";
             // 
+            // txtAddGroup
+            // 
+            this.txtAddGroup.Depth = 0;
+            this.txtAddGroup.Hint = "";
+            this.txtAddGroup.Location = new System.Drawing.Point(563, 26);
+            this.txtAddGroup.MaxLength = 32767;
+            this.txtAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
+            this.txtAddGroup.Name = "txtAddGroup";
+            this.txtAddGroup.PasswordChar = '\0';
+            this.txtAddGroup.SelectedText = "";
+            this.txtAddGroup.SelectionLength = 0;
+            this.txtAddGroup.SelectionStart = 0;
+            this.txtAddGroup.Size = new System.Drawing.Size(217, 23);
+            this.txtAddGroup.TabIndex = 7;
+            this.txtAddGroup.TabStop = false;
+            this.txtAddGroup.UseSystemPasswordChar = false;
+            // 
+            // btnAddGroup
+            // 
+            this.btnAddGroup.AutoSize = true;
+            this.btnAddGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAddGroup.Depth = 0;
+            this.btnAddGroup.Icon = null;
+            this.btnAddGroup.Location = new System.Drawing.Point(670, 55);
+            this.btnAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnAddGroup.Name = "btnAddGroup";
+            this.btnAddGroup.Primary = true;
+            this.btnAddGroup.Size = new System.Drawing.Size(110, 36);
+            this.btnAddGroup.TabIndex = 8;
+            this.btnAddGroup.Text = "+ New Group";
+            this.btnAddGroup.UseVisualStyleBackColor = true;
+            this.btnAddGroup.Click += new System.EventHandler(this.btnAddGroup_Click);
+            // 
+            // tcGroups
+            // 
+            this.tcGroups.Controls.Add(this.tabPage1);
+            this.tcGroups.Depth = 0;
+            this.tcGroups.Location = new System.Drawing.Point(3, 55);
+            this.tcGroups.MouseState = MaterialSkin.MouseState.HOVER;
+            this.tcGroups.Name = "tcGroups";
+            this.tcGroups.SelectedIndex = 0;
+            this.tcGroups.Size = new System.Drawing.Size(531, 335);
+            this.tcGroups.TabIndex = 9;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(523, 309);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "No Messages";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // materialTabSelector1
+            // 
+            this.materialTabSelector1.BaseTabControl = this.tcGroups;
+            this.materialTabSelector1.Depth = 0;
+            this.materialTabSelector1.Location = new System.Drawing.Point(10, 25);
+            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabSelector1.Name = "materialTabSelector1";
+            this.materialTabSelector1.Size = new System.Drawing.Size(520, 23);
+            this.materialTabSelector1.TabIndex = 10;
+            this.materialTabSelector1.Text = "materialTabSelector1";
+            // 
             // WinFormsClient
             // 
-            this.AcceptButton = this.ButtonSend;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(844, 552);
+            this.ClientSize = new System.Drawing.Size(1044, 635);
             this.Controls.Add(this.ChatPanel);
             this.Controls.Add(this.SignInPanel);
             this.MaximizeBox = false;
@@ -257,14 +308,12 @@
             this.ChatPanel.PerformLayout();
             this.SignInPanel.ResumeLayout(false);
             this.SignInPanel.PerformLayout();
+            this.tcGroups.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button ButtonSend;
-        private System.Windows.Forms.TextBox TextBoxMessage;
         private System.Windows.Forms.RichTextBox RichTextBoxConsole;
         private System.Windows.Forms.Panel ChatPanel;
         private System.Windows.Forms.Panel SignInPanel;
@@ -278,6 +327,11 @@
         private MaterialSkin.Controls.MaterialDivider materialDivider1;
         private MaterialSkin.Controls.MaterialSingleLineTextField txtMessage;
         private MaterialSkin.Controls.MaterialRaisedButton btnSend;
+        private MaterialSkin.Controls.MaterialRaisedButton btnAddGroup;
+        private MaterialSkin.Controls.MaterialSingleLineTextField txtAddGroup;
+        private MaterialSkin.Controls.MaterialTabControl tcGroups;
+        private System.Windows.Forms.TabPage tabPage1;
+        private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
     }
 }
 

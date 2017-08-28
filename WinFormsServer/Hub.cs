@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using System.Data.Entity;
-using static ThesisDemo.DatabaseConnection;
+//using static ThesisDemo.DatabaseConnection;
 
 namespace ThesisDemo
 {
@@ -18,18 +18,6 @@ namespace ThesisDemo
     {
         private readonly static ConnectionMapping<string> _connections = new ConnectionMapping<string>();
 
-        //class Message
-        //{
-        //    public int ID { get; set; }
-        //    public string Data { get; set; }
-        //}
-
-        //class MeContext : DbContext
-        //{
-        //    //public MeContext() : base(@"Data Source=DESKTOP-542OICS\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") { }
-        //    public DbSet<Message> Messages { get; set; }
-        //}
-
         private readonly Chat _chat;
 
         public ChatHub() : this(Chat.Instance) { }
@@ -40,7 +28,7 @@ namespace ThesisDemo
         }
 
 
-        public void Send(string name, string message)
+        public void Send(string message)
         {
             //var msg = new Message
             //{
@@ -52,17 +40,18 @@ namespace ThesisDemo
 
             //Clients.All.addMessage(name, message);
 
-            _chat.Send(name, message);
+            _chat.Send(Clients.Caller.userName, message);
 
         }
 
-        public List<User> GetAllUsers()
-        {
-            return _chat.GetAllUsers();
-        }
+        //public List<User> GetAllUsers()
+        //{
+        //    return _chat.GetAllUsers();
+        //}
 
         public override Task OnConnected()
         {
+            //Context property returns a HubCallerContext
             string name = Context.QueryString["UserName"];
             _connections.Add(name, Context.ConnectionId);
 
@@ -71,7 +60,7 @@ namespace ThesisDemo
         }
         public override Task OnDisconnected()
         {
-            string name = Context.User.Identity.Name;
+            string name = Context.QueryString["UserName"];
             _connections.Remove(name, Context.ConnectionId);
 
             Program.MainForm.WriteToConsole("Client disconnected: " + Context.ConnectionId);
