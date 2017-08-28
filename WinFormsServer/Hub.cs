@@ -35,8 +35,8 @@ namespace ThesisDemo
             //db.Messages.Add(msg);
             //db.SaveChanges();
 
-            Clients.Group(Clients.Caller.currentGroup).addMessage(Clients.Caller.userName, message);
-            //Clients.All.addMessage(Clients.Caller.userName, message);
+            //Clients.Group(Clients.Caller.currentGroup).addMessage(Clients.Caller.userName, message);
+            Clients.All.addMessage(Clients.Caller.userName, message);
 
             //_chat.Send(Clients.Caller.userName, message);
 
@@ -45,6 +45,12 @@ namespace ThesisDemo
         public void JoinGroup(string groupName)
         {
             Groups.Add(Context.ConnectionId, groupName);
+            //Clients.Group(groupName).addMessage(Clients.Caller.userName + " joined.");
+        }
+
+        public void LeaveGroup(string groupName)
+        {
+            Groups.Remove(Context.ConnectionId, groupName);
             //Clients.Group(groupName).addMessage(Clients.Caller.userName + " joined.");
         }
 
