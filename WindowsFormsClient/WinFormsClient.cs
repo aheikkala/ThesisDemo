@@ -97,6 +97,8 @@ namespace ThesisDemo
                 TabPage tb = new TabPage(item.GroupName) { Tag = item.ID};
                 tcGroups.TabPages.Add(tb);
                 tb.Controls.Add(new ucChatWindow());
+
+                await HubProxy.Invoke("JoinGroup", item.GroupName);
             }
         }
 
@@ -153,11 +155,16 @@ namespace ThesisDemo
                 user.Groups.Add(group);
                 _db.SaveChanges();
 
-                //AddUserToGroup(UserID, )
+                HubProxy.Invoke("JoinGroup", txtAddGroup.Text);
 
                 txtAddGroup.Text = String.Empty;
                 txtAddGroup.Focus();
             }
+        }
+
+        private void tcGroups_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HubProxy["currentGroup"] = tcGroups.SelectedTab.Text;
         }
 
         //private void AddUserToGroup(Int32 userID, Int32 groupID)

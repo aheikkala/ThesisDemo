@@ -7,13 +7,7 @@ using System.Windows.Forms;
 
 namespace ThesisDemo
 {
-    /// <summary>
-    /// WinForms host for a SignalR server. The host can stop and start the SignalR
-    /// server, report errors when trying to start the server on a URI where a
-    /// server is already being hosted, and monitor when clients connect and disconnect. 
-    /// The hub used in this server is a simple echo service, and has the same 
-    /// functionality as the other hubs in the SignalR Getting Started tutorials.
-    /// </summary>
+    // WinForms host for a SignalR server
     public partial class WinFormsServer : Form
     {
         private IDisposable SignalR { get; set; }
@@ -24,10 +18,8 @@ namespace ThesisDemo
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Calls the StartServer method with Task.Run to not
-        /// block the UI thread. 
-        /// </summary>
+
+        // Calls the StartServer method with Task.Run to not block the UI thread. 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
             WriteToConsole("Starting server...");
@@ -35,20 +27,15 @@ namespace ThesisDemo
             Task.Run(() => StartServer());
         }
 
-        /// <summary>
-        /// Stops the server and closes the form. Restart functionality omitted
-        /// for clarity.
-        /// </summary>
+        // Stops the server and closes the form.
         private void ButtonStop_Click(object sender, EventArgs e)
         {
             //SignalR will be disposed in the FormClosing event
             Close();
         }
 
-        /// <summary>
-        /// Starts the server and checks for error thrown when another server is already 
-        /// running. This method is called asynchronously from Button_Start.
-        /// </summary>
+
+        // Starts the server and checks for error thrown when another server is already running. This method is called asynchronously from Button_Start.
         private void StartServer()
         {
             try
@@ -65,11 +52,9 @@ namespace ThesisDemo
             this.Invoke((Action)(() => ButtonStop.Enabled = true));
             WriteToConsole("Server started at " + ServerURI);
         }
-        /// <summary>
-        /// This method adds a line to the RichTextBoxConsole control, using Invoke if used
-        /// from a SignalR hub thread rather than the UI thread.
-        /// </summary>
-        /// <param name="message"></param>
+
+        // This method adds a line to the RichTextBoxConsole control, using Invoke if used from a SignalR hub thread rather than the UI thread.
+
         internal void WriteToConsole(String message)
         {
             if (RichTextBoxConsole.InvokeRequired)

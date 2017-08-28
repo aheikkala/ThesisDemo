@@ -30,6 +30,11 @@
         {
             this.RichTextBoxConsole = new System.Windows.Forms.RichTextBox();
             this.ChatPanel = new System.Windows.Forms.Panel();
+            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
+            this.tcGroups = new MaterialSkin.Controls.MaterialTabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnAddGroup = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.txtAddGroup = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.txtMessage = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.btnSend = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SignInPanel = new System.Windows.Forms.Panel();
@@ -41,14 +46,9 @@
             this.SignInButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
-            this.txtAddGroup = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.btnAddGroup = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.tcGroups = new MaterialSkin.Controls.MaterialTabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.ChatPanel.SuspendLayout();
-            this.SignInPanel.SuspendLayout();
             this.tcGroups.SuspendLayout();
+            this.SignInPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // RichTextBoxConsole
@@ -80,6 +80,71 @@
             this.ChatPanel.Size = new System.Drawing.Size(1044, 571);
             this.ChatPanel.TabIndex = 4;
             this.ChatPanel.Visible = false;
+            // 
+            // materialTabSelector1
+            // 
+            this.materialTabSelector1.BaseTabControl = this.tcGroups;
+            this.materialTabSelector1.Depth = 0;
+            this.materialTabSelector1.Location = new System.Drawing.Point(0, 0);
+            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabSelector1.Name = "materialTabSelector1";
+            this.materialTabSelector1.Size = new System.Drawing.Size(1044, 21);
+            this.materialTabSelector1.TabIndex = 10;
+            this.materialTabSelector1.Text = "materialTabSelector1";
+            // 
+            // tcGroups
+            // 
+            this.tcGroups.Controls.Add(this.tabPage1);
+            this.tcGroups.Depth = 0;
+            this.tcGroups.Location = new System.Drawing.Point(3, 27);
+            this.tcGroups.MouseState = MaterialSkin.MouseState.HOVER;
+            this.tcGroups.Name = "tcGroups";
+            this.tcGroups.SelectedIndex = 0;
+            this.tcGroups.Size = new System.Drawing.Size(531, 335);
+            this.tcGroups.TabIndex = 9;
+            this.tcGroups.SelectedIndexChanged += new System.EventHandler(this.tcGroups_SelectedIndexChanged);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(523, 309);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "No Messages";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnAddGroup
+            // 
+            this.btnAddGroup.AutoSize = true;
+            this.btnAddGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAddGroup.Depth = 0;
+            this.btnAddGroup.Icon = null;
+            this.btnAddGroup.Location = new System.Drawing.Point(911, 57);
+            this.btnAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnAddGroup.Name = "btnAddGroup";
+            this.btnAddGroup.Primary = true;
+            this.btnAddGroup.Size = new System.Drawing.Size(110, 36);
+            this.btnAddGroup.TabIndex = 8;
+            this.btnAddGroup.Text = "+ New Group";
+            this.btnAddGroup.UseVisualStyleBackColor = true;
+            this.btnAddGroup.Click += new System.EventHandler(this.btnAddGroup_Click);
+            // 
+            // txtAddGroup
+            // 
+            this.txtAddGroup.Depth = 0;
+            this.txtAddGroup.Hint = "";
+            this.txtAddGroup.Location = new System.Drawing.Point(688, 70);
+            this.txtAddGroup.MaxLength = 32767;
+            this.txtAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
+            this.txtAddGroup.Name = "txtAddGroup";
+            this.txtAddGroup.PasswordChar = '\0';
+            this.txtAddGroup.SelectedText = "";
+            this.txtAddGroup.SelectionLength = 0;
+            this.txtAddGroup.SelectionStart = 0;
+            this.txtAddGroup.Size = new System.Drawing.Size(217, 23);
+            this.txtAddGroup.TabIndex = 7;
+            this.txtAddGroup.TabStop = false;
+            this.txtAddGroup.UseSystemPasswordChar = false;
             // 
             // txtMessage
             // 
@@ -227,70 +292,6 @@
             this.materialDivider1.TabIndex = 9;
             this.materialDivider1.Text = "materialDivider1";
             // 
-            // txtAddGroup
-            // 
-            this.txtAddGroup.Depth = 0;
-            this.txtAddGroup.Hint = "";
-            this.txtAddGroup.Location = new System.Drawing.Point(563, 26);
-            this.txtAddGroup.MaxLength = 32767;
-            this.txtAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
-            this.txtAddGroup.Name = "txtAddGroup";
-            this.txtAddGroup.PasswordChar = '\0';
-            this.txtAddGroup.SelectedText = "";
-            this.txtAddGroup.SelectionLength = 0;
-            this.txtAddGroup.SelectionStart = 0;
-            this.txtAddGroup.Size = new System.Drawing.Size(217, 23);
-            this.txtAddGroup.TabIndex = 7;
-            this.txtAddGroup.TabStop = false;
-            this.txtAddGroup.UseSystemPasswordChar = false;
-            // 
-            // btnAddGroup
-            // 
-            this.btnAddGroup.AutoSize = true;
-            this.btnAddGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnAddGroup.Depth = 0;
-            this.btnAddGroup.Icon = null;
-            this.btnAddGroup.Location = new System.Drawing.Point(670, 55);
-            this.btnAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnAddGroup.Name = "btnAddGroup";
-            this.btnAddGroup.Primary = true;
-            this.btnAddGroup.Size = new System.Drawing.Size(110, 36);
-            this.btnAddGroup.TabIndex = 8;
-            this.btnAddGroup.Text = "+ New Group";
-            this.btnAddGroup.UseVisualStyleBackColor = true;
-            this.btnAddGroup.Click += new System.EventHandler(this.btnAddGroup_Click);
-            // 
-            // tcGroups
-            // 
-            this.tcGroups.Controls.Add(this.tabPage1);
-            this.tcGroups.Depth = 0;
-            this.tcGroups.Location = new System.Drawing.Point(3, 55);
-            this.tcGroups.MouseState = MaterialSkin.MouseState.HOVER;
-            this.tcGroups.Name = "tcGroups";
-            this.tcGroups.SelectedIndex = 0;
-            this.tcGroups.Size = new System.Drawing.Size(531, 335);
-            this.tcGroups.TabIndex = 9;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(523, 309);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "No Messages";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // materialTabSelector1
-            // 
-            this.materialTabSelector1.BaseTabControl = this.tcGroups;
-            this.materialTabSelector1.Depth = 0;
-            this.materialTabSelector1.Location = new System.Drawing.Point(10, 25);
-            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(520, 23);
-            this.materialTabSelector1.TabIndex = 10;
-            this.materialTabSelector1.Text = "materialTabSelector1";
-            // 
             // WinFormsClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -306,9 +307,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormsClient_FormClosing);
             this.ChatPanel.ResumeLayout(false);
             this.ChatPanel.PerformLayout();
+            this.tcGroups.ResumeLayout(false);
             this.SignInPanel.ResumeLayout(false);
             this.SignInPanel.PerformLayout();
-            this.tcGroups.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

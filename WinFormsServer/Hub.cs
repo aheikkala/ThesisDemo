@@ -9,11 +9,8 @@ using System.Data.Entity;
 
 namespace ThesisDemo
 {
-    /// <summary>
-    /// Echoes messages sent using the Send message by calling the
-    /// addMessage method on the client. Also reports to the console
-    /// when clients connect and disconnect.
-    /// </summary>
+    //Echoes messages sent using the Send message by calling the addMessage method on the client. 
+    //Also reports to the console when clients connect and disconnect.
     public class ChatHub : Hub
     {
         private readonly static ConnectionMapping<string> _connections = new ConnectionMapping<string>();
@@ -38,16 +35,18 @@ namespace ThesisDemo
             //db.Messages.Add(msg);
             //db.SaveChanges();
 
-            Clients.All.addMessage(Clients.Caller.userName, message);
+            Clients.Group(Clients.Caller.currentGroup).addMessage(Clients.Caller.userName, message);
+            //Clients.All.addMessage(Clients.Caller.userName, message);
 
             //_chat.Send(Clients.Caller.userName, message);
 
         }
 
-        //public List<User> GetAllUsers()
-        //{
-        //    return _chat.GetAllUsers();
-        //}
+        public void JoinGroup(string groupName)
+        {
+            Groups.Add(Context.ConnectionId, groupName);
+            //Clients.Group(groupName).addMessage(Clients.Caller.userName + " joined.");
+        }
 
         public override Task OnConnected()
         {
