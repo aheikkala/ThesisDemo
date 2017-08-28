@@ -7,24 +7,16 @@ using MaterialSkin.Controls;
 using MaterialSkin.Animations;
 using MaterialSkin;
 using static ThesisDemo.DatabaseConnection;
+using System.Linq;
 
 namespace ThesisDemo
 {
-    /// <summary>
-    /// SignalR client hosted in a WinForms application. The client
-    /// lets the user pick a user name, connect to the server asynchronously
-    /// to not block the UI thread, and send chat messages to all connected 
-    /// clients whether they are hosted in WinForms, WPF, or a web application.
-    /// </summary>
     public partial class WinFormsClient : MaterialForm
     {
-        /// <summary>
-        /// This name is simply added to sent messages to identify the user; this 
-        /// sample does not include authentication.
-        /// </summary>
+
         private Int32 UserID { get; set; }
         private String UserName { get; set; }
-        private String[] Users = new String[] { "User 1", "User 2", "User 3" };
+        //private String[] Users = new String[] { "User 1", "User 2", "User 3" };
         private IHubProxy HubProxy { get; set; }
         const string ServerURI = "http://localhost:8080/signalr";
         private HubConnection Connection { get; set; }
@@ -33,8 +25,11 @@ namespace ThesisDemo
         public WinFormsClient()
         {
             InitializeComponent();
-            comboBoxSelectUser.Items.AddRange(Users);
-            comboBoxSelectUser.SelectedIndex = 0;
+            var lstUsers = (from u in _db.Users select new { u.ID, u.UserName }).ToList();
+            comboBoxSelectUser.DataSource = lstUsers;
+            comboBoxSelectUser.DisplayMember = "UserName";
+            comboBoxSelectUser.ValueMember = "ID";
+            //comboBoxSelectUser.SelectedIndex = 0;
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -42,15 +37,13 @@ namespace ThesisDemo
             var msg = new DatabaseConnection.Message
             {
                 Data = txtMessage.Text,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now,
+                User = _db.Users.Find(UserID)
             };
 
             var group = _db.Groups.Find(tcGroups.SelectedTab.Tag);
 
-
             _db.Messages.Add(msg);
-            //group.Messages.Add(msg);
-            //group.Messages = new List <DatabaseConnection.Message> {msg};
             group.Messages.Add(msg);
             _db.SaveChanges();
 
@@ -59,10 +52,8 @@ namespace ThesisDemo
             txtMessage.Focus();
         }
 
-        /// <summary>
-        /// Creates and connects the hub connection and hub proxy. This method
-        /// is called asynchronously from SignInButton_Click.
-        /// </summary>
+        //Creates and connects the hub connection and hub proxy. 
+        //This method is called asynchronously from SignInButton_Click.
         private async void ConnectAsync()
         {
             Connection = new HubConnection(ServerURI, new Dictionary<string, string>
@@ -99,8 +90,9 @@ namespace ThesisDemo
             txtMessage.Focus();
             RichTextBoxConsole.AppendText("Connected to server at " + ServerURI + Environment.NewLine);
 
-            //var groups = _db.Groups;
-            foreach (var item in _db.Groups)
+            var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
+
+            foreach (var item in user.Groups)
             {
                 TabPage tb = new TabPage(item.GroupName) { Tag = item.ID};
                 tcGroups.TabPages.Add(tb);
@@ -123,8 +115,7 @@ namespace ThesisDemo
 
         private void SignInButton_Click(object sender, EventArgs e)
         {
-            //UserName = UserNameTextBox.Text;
-            UserID = comboBoxSelectUser.SelectedIndex + 1;
+            UserID = (Int32)comboBoxSelectUser.SelectedValue;
             UserName = comboBoxSelectUser.GetItemText(comboBoxSelectUser.SelectedItem);
             //Connect to server (use async method to avoid blocking UI thread)
             if (!String.IsNullOrEmpty(UserName))
@@ -154,12 +145,28 @@ namespace ThesisDemo
                     CreationDate = DateTime.Now
                 };
 
+                var user = _db.Users.Find(UserID);
+
                 _db.Groups.Add(group);
+                //group.Users.Add(user);
+
+                user.Groups.Add(group);
                 _db.SaveChanges();
+
+                //AddUserToGroup(UserID, )
 
                 txtAddGroup.Text = String.Empty;
                 txtAddGroup.Focus();
             }
         }
+
+        //private void AddUserToGroup(Int32 userID, Int32 groupID)
+        //{
+        //    var user = _db.Users.Find(userID);
+        //    var group = _db.Groups.Find(groupID);
+
+        //    group.Users.Add(user);
+        //    _db.SaveChanges();
+        //}
     }
 }

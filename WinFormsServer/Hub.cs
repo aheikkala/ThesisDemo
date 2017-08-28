@@ -38,9 +38,9 @@ namespace ThesisDemo
             //db.Messages.Add(msg);
             //db.SaveChanges();
 
-            //Clients.All.addMessage(name, message);
+            Clients.All.addMessage(Clients.Caller.userName, message);
 
-            _chat.Send(Clients.Caller.userName, message);
+            //_chat.Send(Clients.Caller.userName, message);
 
         }
 
