@@ -35,8 +35,8 @@ namespace ThesisDemo
             //db.Messages.Add(msg);
             //db.SaveChanges();
 
-            //Clients.Group(Clients.Caller.currentGroup).addMessage(Clients.Caller.userName, message);
-            Clients.All.addMessage(Clients.Caller.userName, message);
+            Clients.Group((string)Clients.Caller.currentGroup).addMessage(Clients.Caller.userName, message);
+            //Clients.All.addMessage(Clients.Caller.userName, message);
 
             //_chat.Send(Clients.Caller.userName, message);
 
