@@ -92,20 +92,31 @@ namespace ThesisDemo
 
             var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
 
-            foreach (var item in user.Groups)
-            {
-                TabPage tb = new TabPage(item.GroupName) { Tag = item.ID};
-                tcGroups.TabPages.Add(tb);
-                tb.Controls.Add(new ucChatWindow());
+            lwAllGroups.Items.AddRange(GetStuff());
 
-                await HubProxy.Invoke("JoinGroup", item.GroupName);
-            }
+            //foreach (var item in user.Groups)
+            //{
+            //    TabPage tb = new TabPage(item.GroupName) { Tag = item.ID};
+            //    tcGroups.TabPages.Add(tb);
+            //    //tb.Controls.Add(new ucChatWindow());
+
+            //    await HubProxy.Invoke("JoinGroup", item.GroupName);
+            //}
         }
 
-        /// <summary>
-        /// If the server is stopped, the connection will time out after 30 seconds (default), and the 
-        /// Closed event will fire.
-        /// </summary>
+        public ListViewItem[] GetStuff()
+        {
+            var results = from u in _db.Users
+                          select new ListViewItem
+                          {
+                              Name = u.UserName
+                          };
+
+            return results.Cast<ListViewItem>().ToArray();
+        }
+
+        // If the server is stopped, the connection will time out after 30 seconds (default), and the 
+        // Closed event will fire.
         private void Connection_Closed()
         {
             //Deactivate chat UI; show login UI. 

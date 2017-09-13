@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "testi",
+            "sub1"}, -1);
             this.RichTextBoxConsole = new System.Windows.Forms.RichTextBox();
             this.ChatPanel = new System.Windows.Forms.Panel();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
@@ -46,8 +49,12 @@
             this.SignInButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
+            this.lwAllGroups = new MaterialSkin.Controls.MaterialListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ChatPanel.SuspendLayout();
             this.tcGroups.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SignInPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,8 +77,6 @@
             this.ChatPanel.BackColor = System.Drawing.SystemColors.Control;
             this.ChatPanel.Controls.Add(this.materialTabSelector1);
             this.ChatPanel.Controls.Add(this.tcGroups);
-            this.ChatPanel.Controls.Add(this.btnAddGroup);
-            this.ChatPanel.Controls.Add(this.txtAddGroup);
             this.ChatPanel.Controls.Add(this.txtMessage);
             this.ChatPanel.Controls.Add(this.btnSend);
             this.ChatPanel.Controls.Add(this.RichTextBoxConsole);
@@ -106,11 +111,15 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lwAllGroups);
+            this.tabPage1.Controls.Add(this.txtAddGroup);
+            this.tabPage1.Controls.Add(this.btnAddGroup);
+            this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(523, 309);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "No Messages";
+            this.tabPage1.Text = "All Groups";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // btnAddGroup
@@ -119,7 +128,7 @@
             this.btnAddGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAddGroup.Depth = 0;
             this.btnAddGroup.Icon = null;
-            this.btnAddGroup.Location = new System.Drawing.Point(911, 57);
+            this.btnAddGroup.Location = new System.Drawing.Point(399, 259);
             this.btnAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAddGroup.Name = "btnAddGroup";
             this.btnAddGroup.Primary = true;
@@ -133,7 +142,7 @@
             // 
             this.txtAddGroup.Depth = 0;
             this.txtAddGroup.Hint = "";
-            this.txtAddGroup.Location = new System.Drawing.Point(688, 70);
+            this.txtAddGroup.Location = new System.Drawing.Point(3, 272);
             this.txtAddGroup.MaxLength = 32767;
             this.txtAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
             this.txtAddGroup.Name = "txtAddGroup";
@@ -141,7 +150,7 @@
             this.txtAddGroup.SelectedText = "";
             this.txtAddGroup.SelectionLength = 0;
             this.txtAddGroup.SelectionStart = 0;
-            this.txtAddGroup.Size = new System.Drawing.Size(217, 23);
+            this.txtAddGroup.Size = new System.Drawing.Size(384, 23);
             this.txtAddGroup.TabIndex = 7;
             this.txtAddGroup.TabStop = false;
             this.txtAddGroup.UseSystemPasswordChar = false;
@@ -292,6 +301,38 @@
             this.materialDivider1.TabIndex = 9;
             this.materialDivider1.Text = "materialDivider1";
             // 
+            // lwAllGroups
+            // 
+            this.lwAllGroups.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lwAllGroups.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.lwAllGroups.Depth = 0;
+            this.lwAllGroups.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
+            this.lwAllGroups.FullRowSelect = true;
+            this.lwAllGroups.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lwAllGroups.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1});
+            this.lwAllGroups.Location = new System.Drawing.Point(9, 4);
+            this.lwAllGroups.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.lwAllGroups.MouseState = MaterialSkin.MouseState.OUT;
+            this.lwAllGroups.Name = "lwAllGroups";
+            this.lwAllGroups.OwnerDraw = true;
+            this.lwAllGroups.Size = new System.Drawing.Size(500, 249);
+            this.lwAllGroups.TabIndex = 9;
+            this.lwAllGroups.UseCompatibleStateImageBehavior = false;
+            this.lwAllGroups.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Name";
+            this.columnHeader1.Width = 200;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Last Active";
+            this.columnHeader2.Width = 300;
+            // 
             // WinFormsClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -308,6 +349,8 @@
             this.ChatPanel.ResumeLayout(false);
             this.ChatPanel.PerformLayout();
             this.tcGroups.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.SignInPanel.ResumeLayout(false);
             this.SignInPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -333,6 +376,9 @@
         private MaterialSkin.Controls.MaterialTabControl tcGroups;
         private System.Windows.Forms.TabPage tabPage1;
         private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
+        private MaterialSkin.Controls.MaterialListView lwAllGroups;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }
 
