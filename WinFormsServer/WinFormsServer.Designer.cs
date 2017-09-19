@@ -35,9 +35,10 @@
             // 
             // ButtonStart
             // 
-            this.ButtonStart.Location = new System.Drawing.Point(13, 13);
+            this.ButtonStart.Location = new System.Drawing.Point(24, 24);
+            this.ButtonStart.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ButtonStart.Name = "ButtonStart";
-            this.ButtonStart.Size = new System.Drawing.Size(110, 23);
+            this.ButtonStart.Size = new System.Drawing.Size(202, 42);
             this.ButtonStart.TabIndex = 0;
             this.ButtonStart.Text = "Start";
             this.ButtonStart.UseVisualStyleBackColor = true;
@@ -46,9 +47,10 @@
             // ButtonStop
             // 
             this.ButtonStop.Enabled = false;
-            this.ButtonStop.Location = new System.Drawing.Point(129, 13);
+            this.ButtonStop.Location = new System.Drawing.Point(237, 24);
+            this.ButtonStop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ButtonStop.Name = "ButtonStop";
-            this.ButtonStop.Size = new System.Drawing.Size(110, 23);
+            this.ButtonStop.Size = new System.Drawing.Size(202, 42);
             this.ButtonStop.TabIndex = 0;
             this.ButtonStop.Text = "Stop";
             this.ButtonStop.UseVisualStyleBackColor = true;
@@ -56,22 +58,24 @@
             // 
             // RichTextBoxConsole
             // 
-            this.RichTextBoxConsole.Location = new System.Drawing.Point(13, 42);
+            this.RichTextBoxConsole.Location = new System.Drawing.Point(24, 78);
+            this.RichTextBoxConsole.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.RichTextBoxConsole.Name = "RichTextBoxConsole";
             this.RichTextBoxConsole.ReadOnly = true;
-            this.RichTextBoxConsole.Size = new System.Drawing.Size(302, 226);
+            this.RichTextBoxConsole.Size = new System.Drawing.Size(550, 414);
             this.RichTextBoxConsole.TabIndex = 1;
             this.RichTextBoxConsole.Text = "";
             // 
             // WinFormsServer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 304);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(168F, 168F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(864, 561);
             this.Controls.Add(this.RichTextBoxConsole);
             this.Controls.Add(this.ButtonStop);
             this.Controls.Add(this.ButtonStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.MaximizeBox = false;
             this.Name = "WinFormsServer";
             this.Text = "WinForms SignalR Server";

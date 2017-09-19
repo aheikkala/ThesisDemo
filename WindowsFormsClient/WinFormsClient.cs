@@ -106,13 +106,13 @@ namespace ThesisDemo
 
         public ListViewItem[] GetStuff()
         {
-            var results = from u in _db.Users
+            var results = from g in _db.Groups
                           select new ListViewItem
                           {
-                              Name = u.UserName
+                              Text = g.GroupName
                           };
 
-            return results.Cast<ListViewItem>().ToArray();
+            return results.ToArray();
         }
 
         // If the server is stopped, the connection will time out after 30 seconds (default), and the 
