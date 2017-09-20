@@ -91,7 +91,6 @@
   <ItemGroup>
     <Compile Include="Chat.cs" />
     <Compile Include="ConnectionMapping.cs" />
-    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Hub.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WinFormsServer.cs">

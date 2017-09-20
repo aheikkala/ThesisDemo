@@ -63,10 +63,13 @@ namespace ThesisDemo
 
             Connection.Closed += Connection_Closed;
             HubProxy = Connection.CreateHubProxy("ChatHub");
+
             //Handle incoming event from server: use Invoke to write to console from SignalR's thread
-            HubProxy.On<string, string>("AddMessage", (name, message) =>
+            HubProxy.On<string, string, string>("AddMessage", (name, message, group) =>
                 this.Invoke((Action)(() =>
-                    RichTextBoxConsole.AppendText(String.Format("{0}: {1}" + Environment.NewLine, name, message))
+                    //RichTextBoxConsole.AppendText(String.Format("{0}: {1}" + Environment.NewLine, name, message))
+                    WriteMessage(name, message, group)
+                   
                 ))
             );
             try
@@ -94,14 +97,16 @@ namespace ThesisDemo
 
             lwAllGroups.Items.AddRange(GetStuff());
 
-            //foreach (var item in user.Groups)
-            //{
-            //    TabPage tb = new TabPage(item.GroupName) { Tag = item.ID};
-            //    tcGroups.TabPages.Add(tb);
-            //    //tb.Controls.Add(new ucChatWindow());
 
-            //    await HubProxy.Invoke("JoinGroup", item.GroupName);
-            //}
+            //VAIHDA
+            foreach (var item in user.Groups)
+            {
+                TabPage tb = new TabPage(item.GroupName) { Name = item.GroupName , Tag = item.ID};
+                tcGroups.TabPages.Add(tb);
+                tb.Controls.Add(new ucChatWindow());
+
+                await HubProxy.Invoke("JoinGroup", item.GroupName);
+            }
         }
 
         public ListViewItem[] GetStuff()
@@ -178,13 +183,16 @@ namespace ThesisDemo
             HubProxy["currentGroup"] = tcGroups.SelectedTab.Text;
         }
 
-        //private void AddUserToGroup(Int32 userID, Int32 groupID)
-        //{
-        //    var user = _db.Users.Find(userID);
-        //    var group = _db.Groups.Find(groupID);
+        private void WriteMessage(string name, string message, string group)
+        {
+            UserControl uc = tcGroups.TabPages[group].Controls["ucChatWindow"] as UserControl;
 
-        //    group.Users.Add(user);
-        //    _db.SaveChanges();
-        //}
+            if (uc != null) {
+                RichTextBox rtb = uc.Controls["RichTextBoxConsole"] as RichTextBox;
+                rtb.AppendText(string.Format("{0}: {1}" + Environment.NewLine, name, message));
+            }
+
+        }
+
     }
 }
