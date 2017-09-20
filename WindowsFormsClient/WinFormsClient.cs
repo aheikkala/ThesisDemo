@@ -25,6 +25,7 @@ namespace ThesisDemo
         public WinFormsClient()
         {
             InitializeComponent();
+
             var lstUsers = (from u in _db.Users select new { u.ID, u.UserName }).ToList();
             comboBoxSelectUser.DataSource = lstUsers;
             comboBoxSelectUser.DisplayMember = "UserName";
@@ -32,11 +33,31 @@ namespace ThesisDemo
             //comboBoxSelectUser.SelectedIndex = 0;
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
+        //private void btnSend_Click(object sender, EventArgs e)
+        //{
+        //    var msg = new DatabaseConnection.Message
+        //    {
+        //        Data = txtMessage.Text,
+        //        Timestamp = DateTime.Now,
+        //        User = _db.Users.Find(UserID)
+        //    };
+
+        //    var group = _db.Groups.Find(tcGroups.SelectedTab.Tag);
+
+        //    _db.Messages.Add(msg);
+        //    group.Messages.Add(msg);
+        //    _db.SaveChanges();
+
+        //    HubProxy.Invoke("Send", txtMessage.Text);
+        //    txtMessage.Text = String.Empty;
+        //    txtMessage.Focus();
+        //}
+
+        public void SendMessage(string message)
         {
             var msg = new DatabaseConnection.Message
             {
-                Data = txtMessage.Text,
+                Data = message,
                 Timestamp = DateTime.Now,
                 User = _db.Users.Find(UserID)
             };
@@ -47,9 +68,7 @@ namespace ThesisDemo
             group.Messages.Add(msg);
             _db.SaveChanges();
 
-            HubProxy.Invoke("Send", txtMessage.Text);
-            txtMessage.Text = String.Empty;
-            txtMessage.Focus();
+            HubProxy.Invoke("Send", message);
         }
 
         //Creates and connects the hub connection and hub proxy. 
@@ -69,7 +88,6 @@ namespace ThesisDemo
                 this.Invoke((Action)(() =>
                     //RichTextBoxConsole.AppendText(String.Format("{0}: {1}" + Environment.NewLine, name, message))
                     WriteMessage(name, message, group)
-                   
                 ))
             );
             try
@@ -89,8 +107,8 @@ namespace ThesisDemo
             this.Text += " - " + UserName;
             SignInPanel.Visible = false;
             ChatPanel.Visible = true;
-            btnSend.Enabled = true;
-            txtMessage.Focus();
+            //btnSend.Enabled = true;
+            //txtMessage.Focus();
             RichTextBoxConsole.AppendText("Connected to server at " + ServerURI + Environment.NewLine);
 
             var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
@@ -101,9 +119,9 @@ namespace ThesisDemo
             //VAIHDA
             foreach (var item in user.Groups)
             {
-                TabPage tb = new TabPage(item.GroupName) { Name = item.GroupName , Tag = item.ID};
-                tcGroups.TabPages.Add(tb);
-                tb.Controls.Add(new ucChatWindow());
+                //TabPage tp = new TabPage(item.GroupName) { Name = item.GroupName , Tag = item.ID};
+                //tcGroups.TabPages.Add(tp);
+                //tp.Controls.Add(new ucChatWindow() {ParentForm = this});
 
                 await HubProxy.Invoke("JoinGroup", item.GroupName);
             }
@@ -114,7 +132,8 @@ namespace ThesisDemo
             var results = from g in _db.Groups
                           select new ListViewItem
                           {
-                              Text = g.GroupName
+                              Text = g.GroupName,
+                              Tag = g.ID.ToString()
                           };
 
             return results.ToArray();
@@ -126,7 +145,7 @@ namespace ThesisDemo
         {
             //Deactivate chat UI; show login UI. 
             this.Invoke((Action)(() => ChatPanel.Visible = false));
-            this.Invoke((Action)(() => btnSend.Enabled = false));
+            //this.Invoke((Action)(() => btnSend.Enabled = false));
             this.Invoke((Action)(() => StatusText.Text = "You have been disconnected."));
             this.Invoke((Action)(() => SignInPanel.Visible = true));
         }
@@ -180,7 +199,17 @@ namespace ThesisDemo
 
         private void tcGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
-            HubProxy["currentGroup"] = tcGroups.SelectedTab.Text;
+            TabControl tab = sender as TabControl;
+            HubProxy["currentGroup"] = tab.SelectedTab.Text;
+
+            //Button btn = tab.SelectedTab.Controls["ucChatWindow"].Controls["btnSend"] as Button;
+            //this.AcceptButton = btn;
+
+            
+
+            if (tab.SelectedTab.Controls.Find("ucChatWindow", true).Length != 0) {
+                this.AcceptButton = tab.SelectedTab.Controls["ucChatWindow"].Controls["btnSend"] as Button;
+            }
         }
 
         private void WriteMessage(string name, string message, string group)
@@ -192,6 +221,28 @@ namespace ThesisDemo
                 rtb.AppendText(string.Format("{0}: {1}" + Environment.NewLine, name, message));
             }
 
+        }
+
+        private void GetAllMessages(int groupID, string groupName)
+        {
+            TabPage tp = new TabPage(groupName) { Name = groupName, Tag = groupID };
+            tcGroups.TabPages.Add(tp);
+            tp.Controls.Add(new ucChatWindow() { ParentForm = this });
+
+            //TÄSSÄ HAETAAN KESKUSTELUN VIESTIT
+
+            tcGroups.SelectedTab = tp;
+
+        }
+
+        private void lwAllGroups_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListView lw = sender as ListView;
+            if (lw.SelectedItems.Count == 1)
+            {
+                ListViewItem item = lw.SelectedItems[0] as ListViewItem;
+                GetAllMessages(int.Parse(item.Tag.ToString()), item.Text);
+            }
         }
 
     }

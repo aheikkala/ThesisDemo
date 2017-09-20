@@ -12,9 +12,21 @@ namespace ThesisDemo
 {
     public partial class ucChatWindow : UserControl
     {
+        public new WinFormsClient ParentForm { get; set; }
+
         public ucChatWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+
+            ParentForm = this.ParentForm;
+            ParentForm.SendMessage(txtMessage.Text);
+
+            txtMessage.Text = String.Empty;
+            txtMessage.Focus();
         }
     }
 }
