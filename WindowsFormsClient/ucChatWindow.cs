@@ -16,7 +16,11 @@ namespace ThesisDemo
 
         public ucChatWindow()
         {
+
             InitializeComponent();
+            //SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            //this.BackColor = Color.Transparent
+            //Dock = DockStyle.Fill;
         }
 
         private void btnSend_Click(object sender, EventArgs e)

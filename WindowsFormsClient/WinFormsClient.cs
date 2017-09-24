@@ -26,6 +26,13 @@ namespace ThesisDemo
         {
             InitializeComponent();
 
+            //theme:
+            MaterialSkinManager skinManager = MaterialSkinManager.Instance;
+            skinManager.AddFormToManage(this);
+            skinManager.Theme = MaterialSkinManager.Themes.DARK;
+            skinManager.ColorScheme = new ColorScheme(Primary.Green600, Primary.Green600, Primary.BlueGrey500, Accent.Orange700, TextShade.WHITE);
+            //Primary.BlueGrey900 vakio
+
             var lstUsers = (from u in _db.Users select new { u.ID, u.UserName }).ToList();
             comboBoxSelectUser.DataSource = lstUsers;
             comboBoxSelectUser.DisplayMember = "UserName";
@@ -152,7 +159,7 @@ namespace ThesisDemo
 
         private void SignInButton_Click(object sender, EventArgs e)
         {
-            UserID = (Int32)comboBoxSelectUser.SelectedValue;
+            UserID = (int)comboBoxSelectUser.SelectedValue;
             UserName = comboBoxSelectUser.GetItemText(comboBoxSelectUser.SelectedItem);
             //Connect to server (use async method to avoid blocking UI thread)
             if (!String.IsNullOrEmpty(UserName))
@@ -227,7 +234,7 @@ namespace ThesisDemo
         {
             TabPage tp = new TabPage(groupName) { Name = groupName, Tag = groupID };
             tcGroups.TabPages.Add(tp);
-            tp.Controls.Add(new ucChatWindow() { ParentForm = this });
+            tp.Controls.Add(new ucChatWindow() { ParentForm = this, BackColor = SkinManager.GetApplicationBackgroundColor(), Dock = DockStyle.Fill });
 
             //TÄSSÄ HAETAAN KESKUSTELUN VIESTIT
 
