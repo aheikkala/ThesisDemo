@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MaterialSkin;
 
 namespace ThesisDemo
 {
@@ -21,6 +22,7 @@ namespace ThesisDemo
             //SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             //this.BackColor = Color.Transparent
             //Dock = DockStyle.Fill;
+            RichTextBoxConsole.BackColor = MaterialSkinManager.Instance.GetApplicationBackgroundColor();
         }
 
         private void btnSend_Click(object sender, EventArgs e)

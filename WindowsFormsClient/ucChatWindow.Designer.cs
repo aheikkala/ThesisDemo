@@ -39,6 +39,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RichTextBoxConsole.BackColor = System.Drawing.Color.GhostWhite;
             this.RichTextBoxConsole.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.RichTextBoxConsole.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RichTextBoxConsole.Location = new System.Drawing.Point(17, 73);
             this.RichTextBoxConsole.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.RichTextBoxConsole.Name = "RichTextBoxConsole";

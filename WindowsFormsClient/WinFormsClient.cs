@@ -88,6 +88,7 @@ namespace ThesisDemo
             });
 
             Connection.Closed += Connection_Closed;
+            Connection.Reconnecting += Connection_Reconnecting;
             HubProxy = Connection.CreateHubProxy("ChatHub");
 
             //Handle incoming event from server: use Invoke to write to console from SignalR's thread
@@ -111,27 +112,29 @@ namespace ThesisDemo
             HubProxy["userName"] = UserName;
 
             //Activate UI
-            this.Text += " - " + UserName;
+            lblUserName.Text = UserName;
+            lblUserName.Font = new System.Drawing.Font("Arial", 20);
+
             SignInPanel.Visible = false;
             ChatPanel.Visible = true;
             //btnSend.Enabled = true;
             //txtMessage.Focus();
             RichTextBoxConsole.AppendText("Connected to server at " + ServerURI + Environment.NewLine);
 
-            var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
+            //var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
 
-            lwAllGroups.Items.AddRange(GetStuff());
+            UpdateGroups();
 
-
+            lblUserStatus.ForeColor = System.Drawing.Color.Green;
             //VAIHDA
-            foreach (var item in user.Groups)
-            {
-                //TabPage tp = new TabPage(item.GroupName) { Name = item.GroupName , Tag = item.ID};
-                //tcGroups.TabPages.Add(tp);
-                //tp.Controls.Add(new ucChatWindow() {ParentForm = this});
+            //foreach (var item in user.Groups)
+            //{
+            //    //TabPage tp = new TabPage(item.GroupName) { Name = item.GroupName , Tag = item.ID};
+            //    //tcGroups.TabPages.Add(tp);
+            //    //tp.Controls.Add(new ucChatWindow() {ParentForm = this});
 
-                await HubProxy.Invoke("JoinGroup", item.GroupName);
-            }
+            //    await HubProxy.Invoke("JoinGroup", item.GroupName);
+            //}
         }
 
         public ListViewItem[] GetStuff()
@@ -146,15 +149,36 @@ namespace ThesisDemo
             return results.ToArray();
         }
 
+        private async void UpdateGroups()
+        {
+            lwAllGroups.Items.Clear();
+            ///lwAllGroups.Items.AddRange(GetStuff());
+
+            var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
+
+            foreach (var item in user.Groups)
+            {
+
+                lwAllGroups.Items.Add(new ListViewItem { Text = item.GroupName, Tag = item.ID.ToString() });
+                await HubProxy.Invoke("JoinGroup", item.GroupName); //JoinGroup returns void so no need to await?
+            }
+
+        }
+
         // If the server is stopped, the connection will time out after 30 seconds (default), and the 
         // Closed event will fire.
         private void Connection_Closed()
         {
             //Deactivate chat UI; show login UI. 
-            this.Invoke((Action)(() => ChatPanel.Visible = false));
+            Invoke((Action)(() => ChatPanel.Visible = false));
             //this.Invoke((Action)(() => btnSend.Enabled = false));
-            this.Invoke((Action)(() => StatusText.Text = "You have been disconnected."));
-            this.Invoke((Action)(() => SignInPanel.Visible = true));
+            Invoke((Action)(() => StatusText.Text = "You have been disconnected."));
+            Invoke((Action)(() => SignInPanel.Visible = true));
+        }
+
+        private void Connection_Reconnecting()
+        {
+            Invoke((Action)(() => RichTextBoxConsole.AppendText("Reconnecting...")));
         }
 
         private void SignInButton_Click(object sender, EventArgs e)
@@ -201,6 +225,8 @@ namespace ThesisDemo
 
                 txtAddGroup.Text = String.Empty;
                 txtAddGroup.Focus();
+
+                UpdateGroups();
             }
         }
 
@@ -213,7 +239,7 @@ namespace ThesisDemo
             //this.AcceptButton = btn;
 
             
-
+            //set accept button to selected tab
             if (tab.SelectedTab.Controls.Find("ucChatWindow", true).Length != 0) {
                 this.AcceptButton = tab.SelectedTab.Controls["ucChatWindow"].Controls["btnSend"] as Button;
             }
@@ -225,7 +251,19 @@ namespace ThesisDemo
 
             if (uc != null) {
                 RichTextBox rtb = uc.Controls["RichTextBoxConsole"] as RichTextBox;
-                rtb.AppendText(string.Format("{0}: {1}" + Environment.NewLine, name, message));
+                rtb.SelectionColor = SkinManager.GetPrimaryTextColor();
+                if (name == UserName)
+                {
+                    rtb.SelectionAlignment = HorizontalAlignment.Right;
+                    rtb.SelectionRightIndent = 20;
+                    rtb.AppendText(string.Format("{0}" + Environment.NewLine, message));
+                }
+                else
+                {
+                    rtb.SelectionColor = System.Drawing.Color.Black;
+                    rtb.SelectionIndent = 20;
+                    rtb.AppendText(string.Format("{0}: {1}" + Environment.NewLine, name, message));
+                }
             }
 
         }
