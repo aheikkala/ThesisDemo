@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "testi",
             "sub1"}, -1);
             this.RichTextBoxConsole = new System.Windows.Forms.RichTextBox();
             this.ChatPanel = new System.Windows.Forms.Panel();
+            this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
+            this.lblUserStatus = new MaterialSkin.Controls.MaterialLabel();
+            this.lblUserName = new MaterialSkin.Controls.MaterialLabel();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.tcGroups = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -46,9 +49,6 @@
             this.StatusText = new System.Windows.Forms.Label();
             this.SignInButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
-            this.lblUserName = new MaterialSkin.Controls.MaterialLabel();
-            this.lblUserStatus = new MaterialSkin.Controls.MaterialLabel();
             this.ChatPanel.SuspendLayout();
             this.tcGroups.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -59,11 +59,10 @@
             // 
             this.RichTextBoxConsole.BackColor = System.Drawing.Color.GhostWhite;
             this.RichTextBoxConsole.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.RichTextBoxConsole.Location = new System.Drawing.Point(0, 1003);
-            this.RichTextBoxConsole.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.RichTextBoxConsole.Location = new System.Drawing.Point(0, 538);
             this.RichTextBoxConsole.Name = "RichTextBoxConsole";
             this.RichTextBoxConsole.ReadOnly = true;
-            this.RichTextBoxConsole.Size = new System.Drawing.Size(1914, 35);
+            this.RichTextBoxConsole.Size = new System.Drawing.Size(1095, 22);
             this.RichTextBoxConsole.TabIndex = 3;
             this.RichTextBoxConsole.Text = "";
             // 
@@ -80,22 +79,60 @@
             this.ChatPanel.Controls.Add(this.materialTabSelector1);
             this.ChatPanel.Controls.Add(this.tcGroups);
             this.ChatPanel.Controls.Add(this.RichTextBoxConsole);
-            this.ChatPanel.Location = new System.Drawing.Point(0, 63);
-            this.ChatPanel.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ChatPanel.Location = new System.Drawing.Point(0, 64);
             this.ChatPanel.Name = "ChatPanel";
-            this.ChatPanel.Size = new System.Drawing.Size(1914, 1038);
+            this.ChatPanel.Size = new System.Drawing.Size(1094, 562);
             this.ChatPanel.TabIndex = 4;
             this.ChatPanel.Visible = false;
+            // 
+            // materialDivider1
+            // 
+            this.materialDivider1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialDivider1.Depth = 0;
+            this.materialDivider1.Location = new System.Drawing.Point(21, 73);
+            this.materialDivider1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.materialDivider1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialDivider1.Name = "materialDivider1";
+            this.materialDivider1.Size = new System.Drawing.Size(1050, 6);
+            this.materialDivider1.TabIndex = 11;
+            this.materialDivider1.Text = "materialDivider1";
+            // 
+            // lblUserStatus
+            // 
+            this.lblUserStatus.AutoSize = true;
+            this.lblUserStatus.Depth = 0;
+            this.lblUserStatus.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblUserStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblUserStatus.Location = new System.Drawing.Point(26, 42);
+            this.lblUserStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblUserStatus.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblUserStatus.Name = "lblUserStatus";
+            this.lblUserStatus.Size = new System.Drawing.Size(51, 19);
+            this.lblUserStatus.TabIndex = 13;
+            this.lblUserStatus.Text = "Online";
+            // 
+            // lblUserName
+            // 
+            this.lblUserName.AutoSize = true;
+            this.lblUserName.Depth = 0;
+            this.lblUserName.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblUserName.Location = new System.Drawing.Point(26, 26);
+            this.lblUserName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblUserName.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblUserName.Name = "lblUserName";
+            this.lblUserName.Size = new System.Drawing.Size(96, 19);
+            this.lblUserName.TabIndex = 12;
+            this.lblUserName.Text = "lblUserName";
             // 
             // materialTabSelector1
             // 
             this.materialTabSelector1.BaseTabControl = this.tcGroups;
             this.materialTabSelector1.Depth = 0;
-            this.materialTabSelector1.Location = new System.Drawing.Point(37, 155);
-            this.materialTabSelector1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.materialTabSelector1.Location = new System.Drawing.Point(21, 89);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(1837, 35);
+            this.materialTabSelector1.Size = new System.Drawing.Size(1050, 20);
             this.materialTabSelector1.TabIndex = 10;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
@@ -106,12 +143,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tcGroups.Controls.Add(this.tabPage1);
             this.tcGroups.Depth = 0;
-            this.tcGroups.Location = new System.Drawing.Point(37, 191);
-            this.tcGroups.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.tcGroups.Location = new System.Drawing.Point(21, 109);
             this.tcGroups.MouseState = MaterialSkin.MouseState.HOVER;
             this.tcGroups.Name = "tcGroups";
             this.tcGroups.SelectedIndex = 0;
-            this.tcGroups.Size = new System.Drawing.Size(1841, 802);
+            this.tcGroups.Size = new System.Drawing.Size(1052, 427);
             this.tcGroups.TabIndex = 9;
             this.tcGroups.SelectedIndexChanged += new System.EventHandler(this.tcGroups_SelectedIndexChanged);
             // 
@@ -122,10 +158,9 @@
             this.tabPage1.Controls.Add(this.txtAddGroup);
             this.tabPage1.Controls.Add(this.btnAddGroup);
             this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabPage1.Location = new System.Drawing.Point(4, 33);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1833, 765);
+            this.tabPage1.Size = new System.Drawing.Size(1044, 401);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "All Groups";
             // 
@@ -142,15 +177,14 @@
             this.lwAllGroups.FullRowSelect = true;
             this.lwAllGroups.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lwAllGroups.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem12});
+            listViewItem1});
             this.lwAllGroups.Location = new System.Drawing.Point(0, 0);
-            this.lwAllGroups.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.lwAllGroups.MouseLocation = new System.Drawing.Point(-1, -1);
             this.lwAllGroups.MouseState = MaterialSkin.MouseState.OUT;
             this.lwAllGroups.MultiSelect = false;
             this.lwAllGroups.Name = "lwAllGroups";
             this.lwAllGroups.OwnerDraw = true;
-            this.lwAllGroups.Size = new System.Drawing.Size(1833, 675);
+            this.lwAllGroups.Size = new System.Drawing.Size(1048, 356);
             this.lwAllGroups.TabIndex = 9;
             this.lwAllGroups.UseCompatibleStateImageBehavior = false;
             this.lwAllGroups.View = System.Windows.Forms.View.Details;
@@ -171,8 +205,7 @@
             this.txtAddGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtAddGroup.Depth = 0;
             this.txtAddGroup.Hint = "";
-            this.txtAddGroup.Location = new System.Drawing.Point(0, 729);
-            this.txtAddGroup.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtAddGroup.Location = new System.Drawing.Point(5, 378);
             this.txtAddGroup.MaxLength = 32767;
             this.txtAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
             this.txtAddGroup.Name = "txtAddGroup";
@@ -180,7 +213,7 @@
             this.txtAddGroup.SelectedText = "";
             this.txtAddGroup.SelectionLength = 0;
             this.txtAddGroup.SelectionStart = 0;
-            this.txtAddGroup.Size = new System.Drawing.Size(692, 36);
+            this.txtAddGroup.Size = new System.Drawing.Size(395, 23);
             this.txtAddGroup.TabIndex = 7;
             this.txtAddGroup.TabStop = false;
             this.txtAddGroup.UseSystemPasswordChar = false;
@@ -192,12 +225,11 @@
             this.btnAddGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAddGroup.Depth = 0;
             this.btnAddGroup.Icon = null;
-            this.btnAddGroup.Location = new System.Drawing.Point(702, 729);
-            this.btnAddGroup.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnAddGroup.Location = new System.Drawing.Point(401, 371);
             this.btnAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAddGroup.Name = "btnAddGroup";
             this.btnAddGroup.Primary = true;
-            this.btnAddGroup.Size = new System.Drawing.Size(180, 36);
+            this.btnAddGroup.Size = new System.Drawing.Size(110, 36);
             this.btnAddGroup.TabIndex = 8;
             this.btnAddGroup.Text = "+ New Group";
             this.btnAddGroup.UseVisualStyleBackColor = true;
@@ -213,38 +245,34 @@
             this.SignInPanel.Controls.Add(this.StatusText);
             this.SignInPanel.Controls.Add(this.SignInButton);
             this.SignInPanel.Controls.Add(this.label1);
-            this.SignInPanel.Location = new System.Drawing.Point(0, 63);
-            this.SignInPanel.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.SignInPanel.Location = new System.Drawing.Point(0, 64);
             this.SignInPanel.Name = "SignInPanel";
-            this.SignInPanel.Size = new System.Drawing.Size(1914, 1038);
+            this.SignInPanel.Size = new System.Drawing.Size(1094, 562);
             this.SignInPanel.TabIndex = 4;
             // 
             // comboBoxSelectUser
             // 
             this.comboBoxSelectUser.FormattingEnabled = true;
-            this.comboBoxSelectUser.Location = new System.Drawing.Point(16, 65);
-            this.comboBoxSelectUser.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.comboBoxSelectUser.Location = new System.Drawing.Point(9, 37);
             this.comboBoxSelectUser.Name = "comboBoxSelectUser";
-            this.comboBoxSelectUser.Size = new System.Drawing.Size(316, 32);
+            this.comboBoxSelectUser.Size = new System.Drawing.Size(182, 21);
             this.comboBoxSelectUser.TabIndex = 7;
             // 
             // StatusText
             // 
             this.StatusText.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.StatusText.Location = new System.Drawing.Point(16, 126);
-            this.StatusText.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.StatusText.Location = new System.Drawing.Point(9, 72);
             this.StatusText.Name = "StatusText";
-            this.StatusText.Size = new System.Drawing.Size(875, 24);
+            this.StatusText.Size = new System.Drawing.Size(500, 14);
             this.StatusText.TabIndex = 6;
             this.StatusText.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.StatusText.Visible = false;
             // 
             // SignInButton
             // 
-            this.SignInButton.Location = new System.Drawing.Point(345, 65);
-            this.SignInButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.SignInButton.Location = new System.Drawing.Point(197, 37);
             this.SignInButton.Name = "SignInButton";
-            this.SignInButton.Size = new System.Drawing.Size(138, 38);
+            this.SignInButton.Size = new System.Drawing.Size(79, 22);
             this.SignInButton.TabIndex = 5;
             this.SignInButton.Text = "Sign In";
             this.SignInButton.UseVisualStyleBackColor = true;
@@ -253,63 +281,24 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 21);
-            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label1.Location = new System.Drawing.Point(7, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 25);
+            this.label1.Size = new System.Drawing.Size(87, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Enter user name:";
             // 
-            // materialDivider1
-            // 
-            this.materialDivider1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialDivider1.Depth = 0;
-            this.materialDivider1.Location = new System.Drawing.Point(37, 128);
-            this.materialDivider1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialDivider1.Name = "materialDivider1";
-            this.materialDivider1.Size = new System.Drawing.Size(1837, 10);
-            this.materialDivider1.TabIndex = 11;
-            this.materialDivider1.Text = "materialDivider1";
-            // 
-            // lblUserName
-            // 
-            this.lblUserName.AutoSize = true;
-            this.lblUserName.Depth = 0;
-            this.lblUserName.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblUserName.Location = new System.Drawing.Point(45, 46);
-            this.lblUserName.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(165, 32);
-            this.lblUserName.TabIndex = 12;
-            this.lblUserName.Text = "lblUserName";
-            // 
-            // lblUserStatus
-            // 
-            this.lblUserStatus.AutoSize = true;
-            this.lblUserStatus.Depth = 0;
-            this.lblUserStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.142858F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblUserStatus.Location = new System.Drawing.Point(46, 74);
-            this.lblUserStatus.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblUserStatus.Name = "lblUserStatus";
-            this.lblUserStatus.Size = new System.Drawing.Size(69, 25);
-            this.lblUserStatus.TabIndex = 13;
-            this.lblUserStatus.Text = "Online";
-            // 
             // WinFormsClient
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(168F, 168F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1914, 1101);
+            this.ClientSize = new System.Drawing.Size(1094, 624);
             this.Controls.Add(this.ChatPanel);
             this.Controls.Add(this.SignInPanel);
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(948, 1018);
+            this.MinimumSize = new System.Drawing.Size(542, 582);
             this.Name = "WinFormsClient";
             this.Text = "Chat App";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormsClient_FormClosing);

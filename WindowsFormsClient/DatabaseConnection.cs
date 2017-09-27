@@ -21,6 +21,12 @@ namespace ThesisDemo
             public string GroupName { get; set; }
             public DateTime CreationDate { get; set; }
             //public virtual List<User> Users { get; set; }
+            //public virtual List<Message> OrderedMessages
+            //{
+            //    get { return Messages.OrderBy(m => m.Timestamp).ToList(); }
+            //    set { Messages = value; }
+            //}
+
             public virtual List<Message> Messages { get; set; }
         }
         public class Message
@@ -35,8 +41,8 @@ namespace ThesisDemo
         public class MeContext : DbContext
         {
 
-            public MeContext() : base(@"Data Source=DESKTOP-542OICS\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
-            //public MeContext() : base(@"Data Source=PII-PARTJUH\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
+            //public MeContext() : base(@"Data Source=DESKTOP-542OICS\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
+            public MeContext() : base(@"Data Source=PII-PARTJUH\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
 
             //Entity set:
             public DbSet<Message> Messages { get; set; }

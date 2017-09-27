@@ -27,12 +27,22 @@ namespace ThesisDemo
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-
+            //tämä paremmin...
             ParentForm = this.ParentForm;
             ParentForm.SendMessage(txtMessage.Text);
 
             txtMessage.Text = String.Empty;
             txtMessage.Focus();
+        }
+
+        private void RichTextBoxConsole_Enter(object sender, EventArgs e)
+        {
+            txtMessage.Focus();
+        }
+
+        private void btnCloseTabPage_Click(object sender, EventArgs e)
+        {
+            Parent.Dispose();
         }
     }
 }

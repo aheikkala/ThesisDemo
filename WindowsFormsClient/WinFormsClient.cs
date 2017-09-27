@@ -158,7 +158,6 @@ namespace ThesisDemo
 
             foreach (var item in user.Groups)
             {
-
                 lwAllGroups.Items.Add(new ListViewItem { Text = item.GroupName, Tag = item.ID.ToString() });
                 await HubProxy.Invoke("JoinGroup", item.GroupName); //JoinGroup returns void so no need to await?
             }
@@ -255,14 +254,18 @@ namespace ThesisDemo
                 if (name == UserName)
                 {
                     rtb.SelectionAlignment = HorizontalAlignment.Right;
+                    rtb.SelectionColor = SkinManager.GetPrimaryTextColor();
                     rtb.SelectionRightIndent = 20;
                     rtb.AppendText(string.Format("{0}" + Environment.NewLine, message));
+                    rtb.ScrollToCaret();
                 }
                 else
                 {
-                    rtb.SelectionColor = System.Drawing.Color.Black;
+                    rtb.SelectionAlignment = HorizontalAlignment.Left;
+                    rtb.SelectionColor = System.Drawing.Color.LightGreen;
                     rtb.SelectionIndent = 20;
                     rtb.AppendText(string.Format("{0}: {1}" + Environment.NewLine, name, message));
+                    rtb.ScrollToCaret();
                 }
             }
 
@@ -271,12 +274,23 @@ namespace ThesisDemo
         private void GetAllMessages(int groupID, string groupName)
         {
             TabPage tp = new TabPage(groupName) { Name = groupName, Tag = groupID };
+
+            if (tcGroups.TabPages.ContainsKey(groupName)) { return; }
+
             tcGroups.TabPages.Add(tp);
             tp.Controls.Add(new ucChatWindow() { ParentForm = this, BackColor = SkinManager.GetApplicationBackgroundColor(), Dock = DockStyle.Fill });
 
-            //TÄSSÄ HAETAAN KESKUSTELUN VIESTIT
-
             tcGroups.SelectedTab = tp;
+
+            var currentGroup = _db.Groups
+                                    .Include("Messages.User")
+                                    .SingleOrDefault(g => g.ID == groupID);
+
+            foreach (var item in currentGroup.Messages.OrderBy(m => m.Timestamp))
+            {
+                WriteMessage(item.User.UserName, item.Data, groupName);
+            }
+
 
         }
 
