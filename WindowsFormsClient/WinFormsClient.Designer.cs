@@ -39,7 +39,7 @@
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.tcGroups = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.lwAllGroups = new MaterialSkin.Controls.MaterialListView();
+            this.lvAllGroups = new MaterialSkin.Controls.MaterialListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtAddGroup = new MaterialSkin.Controls.MaterialSingleLineTextField();
@@ -154,7 +154,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.GhostWhite;
-            this.tabPage1.Controls.Add(this.lwAllGroups);
+            this.tabPage1.Controls.Add(this.lvAllGroups);
             this.tabPage1.Controls.Add(this.txtAddGroup);
             this.tabPage1.Controls.Add(this.btnAddGroup);
             this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -164,31 +164,31 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "All Groups";
             // 
-            // lwAllGroups
+            // lvAllGroups
             // 
-            this.lwAllGroups.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lvAllGroups.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.lwAllGroups.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lwAllGroups.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvAllGroups.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvAllGroups.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.lwAllGroups.Depth = 0;
-            this.lwAllGroups.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
-            this.lwAllGroups.FullRowSelect = true;
-            this.lwAllGroups.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lwAllGroups.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            this.lvAllGroups.Depth = 0;
+            this.lvAllGroups.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
+            this.lvAllGroups.FullRowSelect = true;
+            this.lvAllGroups.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvAllGroups.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
-            this.lwAllGroups.Location = new System.Drawing.Point(0, 0);
-            this.lwAllGroups.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.lwAllGroups.MouseState = MaterialSkin.MouseState.OUT;
-            this.lwAllGroups.MultiSelect = false;
-            this.lwAllGroups.Name = "lwAllGroups";
-            this.lwAllGroups.OwnerDraw = true;
-            this.lwAllGroups.Size = new System.Drawing.Size(1048, 356);
-            this.lwAllGroups.TabIndex = 9;
-            this.lwAllGroups.UseCompatibleStateImageBehavior = false;
-            this.lwAllGroups.View = System.Windows.Forms.View.Details;
-            this.lwAllGroups.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lwAllGroups_MouseDoubleClick);
+            this.lvAllGroups.Location = new System.Drawing.Point(0, 0);
+            this.lvAllGroups.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.lvAllGroups.MouseState = MaterialSkin.MouseState.OUT;
+            this.lvAllGroups.MultiSelect = false;
+            this.lvAllGroups.Name = "lvAllGroups";
+            this.lvAllGroups.OwnerDraw = true;
+            this.lvAllGroups.Size = new System.Drawing.Size(1048, 356);
+            this.lvAllGroups.TabIndex = 9;
+            this.lvAllGroups.UseCompatibleStateImageBehavior = false;
+            this.lvAllGroups.View = System.Windows.Forms.View.Details;
+            this.lvAllGroups.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lwAllGroups_MouseDoubleClick);
             // 
             // columnHeader1
             // 
@@ -326,7 +326,7 @@
         private MaterialSkin.Controls.MaterialTabControl tcGroups;
         private System.Windows.Forms.TabPage tabPage1;
         private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
-        private MaterialSkin.Controls.MaterialListView lwAllGroups;
+        private MaterialSkin.Controls.MaterialListView lvAllGroups;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private MaterialSkin.Controls.MaterialDivider materialDivider1;

@@ -151,17 +151,36 @@ namespace ThesisDemo
 
         private async void UpdateGroups()
         {
-            lwAllGroups.Items.Clear();
+            lvAllGroups.Items.Clear();
             ///lwAllGroups.Items.AddRange(GetStuff());
 
             var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
 
             foreach (var item in user.Groups)
             {
-                lwAllGroups.Items.Add(new ListViewItem { Text = item.GroupName, Tag = item.ID.ToString() });
+                lvAllGroups.Items.Add(new ListViewItem { Text = item.GroupName, Tag = item.ID.ToString() });
                 await HubProxy.Invoke("JoinGroup", item.GroupName); //JoinGroup returns void so no need to await?
             }
+        }
 
+        //TÄMÄ PITÄÄ VAIHTAA ID:LLE! MUUALTAKIN...
+        private void UpdateUsersInGroup(string groupName)
+        {
+            UserControl uc = tcGroups.TabPages[groupName].Controls["ucChatWindow"] as UserControl;
+            ListView lv = uc.Controls["lvUsersInGroup"] as ListView;
+
+            lv.Items.Clear();
+            //VARMAAN PITÄÄ MUUTTAA DB MALLIA
+            //var users = _db.Users.Include("Groups").Where(u => u.Groups.Find(g => g.GroupName == groupName));
+            //var group = _db.Groups.i.Where(g => g.GroupName == groupName);
+
+            var group = _db.Groups.Include("Users").Select(x => x.GroupName)
+
+
+            foreach (var item in users)
+            {
+                lv.Items.Add(new ListViewItem { Text = item.UserName, Tag = item.ID.ToString() });
+            }
         }
 
         // If the server is stopped, the connection will time out after 30 seconds (default), and the 
@@ -292,6 +311,7 @@ namespace ThesisDemo
             }
 
 
+            UpdateUsersInGroup(groupName);
         }
 
         private void lwAllGroups_MouseDoubleClick(object sender, MouseEventArgs e)

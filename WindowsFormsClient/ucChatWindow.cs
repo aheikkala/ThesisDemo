@@ -23,6 +23,7 @@ namespace ThesisDemo
             //this.BackColor = Color.Transparent
             //Dock = DockStyle.Fill;
             RichTextBoxConsole.BackColor = MaterialSkinManager.Instance.GetApplicationBackgroundColor();
+            lvUsersInGroup.BackColor = MaterialSkinManager.Instance.GetApplicationBackgroundColor();
         }
 
         private void btnSend_Click(object sender, EventArgs e)
