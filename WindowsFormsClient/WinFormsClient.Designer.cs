@@ -188,7 +188,7 @@
             this.lvAllGroups.TabIndex = 9;
             this.lvAllGroups.UseCompatibleStateImageBehavior = false;
             this.lvAllGroups.View = System.Windows.Forms.View.Details;
-            this.lvAllGroups.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lwAllGroups_MouseDoubleClick);
+            this.lvAllGroups.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvAllGroups_MouseDoubleClick);
             // 
             // columnHeader1
             // 

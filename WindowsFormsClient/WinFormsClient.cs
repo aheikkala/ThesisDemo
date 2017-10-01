@@ -174,10 +174,10 @@ namespace ThesisDemo
             //var users = _db.Users.Include("Groups").Where(u => u.Groups.Find(g => g.GroupName == groupName));
             //var group = _db.Groups.i.Where(g => g.GroupName == groupName);
 
-            var group = _db.Groups.Include("Users").Select(x => x.GroupName)
+            var group = _db.Groups.Include("Users").SingleOrDefault(x => x.GroupName == groupName);
 
 
-            foreach (var item in users)
+            foreach (var item in group.Users)
             {
                 lv.Items.Add(new ListViewItem { Text = item.UserName, Tag = item.ID.ToString() });
             }
@@ -314,12 +314,12 @@ namespace ThesisDemo
             UpdateUsersInGroup(groupName);
         }
 
-        private void lwAllGroups_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void lvAllGroups_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            ListView lw = sender as ListView;
-            if (lw.SelectedItems.Count == 1)
+            ListView lv = sender as ListView;
+            if (lv.SelectedItems.Count == 1)
             {
-                ListViewItem item = lw.SelectedItems[0] as ListViewItem;
+                ListViewItem item = lv.SelectedItems[0] as ListViewItem;
                 GetAllMessages(int.Parse(item.Tag.ToString()), item.Text);
             }
         }

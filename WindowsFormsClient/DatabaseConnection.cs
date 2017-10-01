@@ -28,6 +28,7 @@ namespace ThesisDemo
             //}
 
             public virtual List<Message> Messages { get; set; }
+            public virtual List<User> Users { get; set; }
         }
         public class Message
         {
@@ -41,8 +42,8 @@ namespace ThesisDemo
         public class MeContext : DbContext
         {
 
-            //public MeContext() : base(@"Data Source=DESKTOP-542OICS\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
-            public MeContext() : base(@"Data Source=PII-PARTJUH\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
+            public MeContext() : base(@"Data Source=DESKTOP-542OICS\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
+            //public MeContext() : base(@"Data Source=PII-PARTJUH\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
 
             //Entity set:
             public DbSet<Message> Messages { get; set; }
@@ -52,7 +53,7 @@ namespace ThesisDemo
             //Model:
             protected override void OnModelCreating(DbModelBuilder modelBuilder)
             {
-                modelBuilder.Entity<User>().HasMany(x => x.Groups).WithMany();
+                modelBuilder.Entity<User>().HasMany(x => x.Groups).WithMany(g => g.Users);
                 //modelBuilder.Entity<Group>().HasMany(x => x.Users).WithMany();
                 modelBuilder.Entity<Group>().HasMany(x => x.Messages).WithMany();
                 //modelBuilder.Entity<Group>().HasMany(x => x.Messages).WithMany();
