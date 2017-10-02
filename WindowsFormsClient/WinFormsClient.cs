@@ -89,6 +89,8 @@ namespace ThesisDemo
 
             Connection.Closed += Connection_Closed;
             Connection.Reconnecting += Connection_Reconnecting;
+            Connection.Reconnected += Connection_Reconnected;
+
             HubProxy = Connection.CreateHubProxy("ChatHub");
 
             //Handle incoming event from server: use Invoke to write to console from SignalR's thread
@@ -168,6 +170,7 @@ namespace ThesisDemo
         {
             UserControl uc = tcGroups.TabPages[groupName].Controls["ucChatWindow"] as UserControl;
             ListView lv = uc.Controls["lvUsersInGroup"] as ListView;
+            //MaterialContextMenuStrip cms = uc.ContextMenuStrip as MaterialContextMenuStrip;
 
             lv.Items.Clear();
             //VARMAAN PITÄÄ MUUTTAA DB MALLIA
@@ -197,6 +200,15 @@ namespace ThesisDemo
         private void Connection_Reconnecting()
         {
             Invoke((Action)(() => RichTextBoxConsole.AppendText("Reconnecting...")));
+            Invoke((Action)(() => lblUserStatus.ForeColor = System.Drawing.Color.Yellow));
+            Invoke((Action)(() => lblUserStatus.Text = "Reconnecting..."));
+        }
+
+        private void Connection_Reconnected()
+        {
+            Invoke((Action)(() => RichTextBoxConsole.AppendText("Reconnected")));
+            Invoke((Action)(() => lblUserStatus.ForeColor = System.Drawing.Color.Green));
+            Invoke((Action)(() => lblUserStatus.Text = "Online"));
         }
 
         private void SignInButton_Click(object sender, EventArgs e)
@@ -322,6 +334,17 @@ namespace ThesisDemo
                 ListViewItem item = lv.SelectedItems[0] as ListViewItem;
                 GetAllMessages(int.Parse(item.Tag.ToString()), item.Text);
             }
+        }
+
+        public List<User> GetUsersToAdd(string groupName)
+        {
+            //var users = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
+            var group = _db.Groups.SingleOrDefault(x => x.GroupName == groupName);
+            //var users = _db.Users.Where(x => !group.Users.Contains(x)).ToList();
+            //var users = _db.Users.Except(group.Users);
+            var users = _db.Users;
+            return users.ToList();
+            
         }
 
     }

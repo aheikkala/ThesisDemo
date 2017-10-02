@@ -28,13 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Arttu");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Arttu");
             this.RichTextBoxConsole = new System.Windows.Forms.RichTextBox();
             this.txtMessage = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.btnSend = new MaterialSkin.Controls.MaterialRaisedButton();
             this.btnCloseTabPage = new MaterialSkin.Controls.MaterialFlatButton();
             this.lvUsersInGroup = new MaterialSkin.Controls.MaterialListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnAddUserToGroup = new MaterialSkin.Controls.MaterialFlatButton();
+            this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.materialContextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // RichTextBoxConsole
@@ -62,7 +67,7 @@
             this.txtMessage.BackColor = System.Drawing.SystemColors.Control;
             this.txtMessage.Depth = 0;
             this.txtMessage.Hint = "";
-            this.txtMessage.Location = new System.Drawing.Point(218, 350);
+            this.txtMessage.Location = new System.Drawing.Point(218, 335);
             this.txtMessage.Margin = new System.Windows.Forms.Padding(6);
             this.txtMessage.MaxLength = 32767;
             this.txtMessage.MouseState = MaterialSkin.MouseState.HOVER;
@@ -71,7 +76,7 @@
             this.txtMessage.SelectedText = "";
             this.txtMessage.SelectionLength = 0;
             this.txtMessage.SelectionStart = 0;
-            this.txtMessage.Size = new System.Drawing.Size(354, 23);
+            this.txtMessage.Size = new System.Drawing.Size(327, 36);
             this.txtMessage.TabIndex = 8;
             this.txtMessage.TabStop = false;
             this.txtMessage.UseSystemPasswordChar = false;
@@ -84,12 +89,12 @@
             this.btnSend.BackColor = System.Drawing.Color.White;
             this.btnSend.Depth = 0;
             this.btnSend.Icon = null;
-            this.btnSend.Location = new System.Drawing.Point(576, 337);
+            this.btnSend.Location = new System.Drawing.Point(547, 335);
             this.btnSend.Margin = new System.Windows.Forms.Padding(6);
             this.btnSend.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSend.Name = "btnSend";
             this.btnSend.Primary = true;
-            this.btnSend.Size = new System.Drawing.Size(56, 36);
+            this.btnSend.Size = new System.Drawing.Size(85, 36);
             this.btnSend.TabIndex = 7;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = false;
@@ -107,7 +112,7 @@
             this.btnCloseTabPage.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCloseTabPage.Name = "btnCloseTabPage";
             this.btnCloseTabPage.Primary = false;
-            this.btnCloseTabPage.Size = new System.Drawing.Size(30, 36);
+            this.btnCloseTabPage.Size = new System.Drawing.Size(39, 36);
             this.btnCloseTabPage.TabIndex = 9;
             this.btnCloseTabPage.Text = "X";
             this.btnCloseTabPage.UseVisualStyleBackColor = true;
@@ -123,14 +128,14 @@
             this.lvUsersInGroup.FullRowSelect = true;
             this.lvUsersInGroup.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvUsersInGroup.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-            this.lvUsersInGroup.Location = new System.Drawing.Point(3, 48);
+            listViewItem2});
+            this.lvUsersInGroup.Location = new System.Drawing.Point(4, 48);
             this.lvUsersInGroup.MouseLocation = new System.Drawing.Point(-1, -1);
             this.lvUsersInGroup.MouseState = MaterialSkin.MouseState.OUT;
             this.lvUsersInGroup.MultiSelect = false;
             this.lvUsersInGroup.Name = "lvUsersInGroup";
             this.lvUsersInGroup.OwnerDraw = true;
-            this.lvUsersInGroup.Size = new System.Drawing.Size(206, 278);
+            this.lvUsersInGroup.Size = new System.Drawing.Size(205, 278);
             this.lvUsersInGroup.TabIndex = 10;
             this.lvUsersInGroup.UseCompatibleStateImageBehavior = false;
             this.lvUsersInGroup.View = System.Windows.Forms.View.Details;
@@ -140,11 +145,56 @@
             this.columnHeader1.Text = "";
             this.columnHeader1.Width = 187;
             // 
+            // btnAddUserToGroup
+            // 
+            this.btnAddUserToGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAddUserToGroup.Depth = 0;
+            this.btnAddUserToGroup.Icon = null;
+            this.btnAddUserToGroup.Location = new System.Drawing.Point(4, 290);
+            this.btnAddUserToGroup.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnAddUserToGroup.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnAddUserToGroup.Name = "btnAddUserToGroup";
+            this.btnAddUserToGroup.Primary = false;
+            this.btnAddUserToGroup.Size = new System.Drawing.Size(205, 36);
+            this.btnAddUserToGroup.TabIndex = 11;
+            this.btnAddUserToGroup.Text = "+ Add";
+            this.btnAddUserToGroup.UseVisualStyleBackColor = true;
+            this.btnAddUserToGroup.Click += new System.EventHandler(this.btnAddUserToGroup_Click);
+            // 
+            // materialContextMenuStrip1
+            // 
+            this.materialContextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialContextMenuStrip1.Depth = 0;
+            this.materialContextMenuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
+            this.materialContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2});
+            this.materialContextMenuStrip1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialContextMenuStrip1.Name = "materialContextMenuStrip1";
+            this.materialContextMenuStrip1.Size = new System.Drawing.Size(271, 110);
+            this.materialContextMenuStrip1.Text = "Invite user:";
+            this.materialContextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.materialContextMenuStrip1_ItemClicked);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
+            this.toolStripMenuItem1.Text = "toolStripMenuItem1";
+            this.toolStripMenuItem1.ToolTipText = "Testi1";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(270, 34);
+            this.toolStripMenuItem2.Text = "toolStripMenuItem2";
+            this.toolStripMenuItem2.ToolTipText = "Testi2";
+            // 
             // ucChatWindow
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.btnAddUserToGroup);
             this.Controls.Add(this.lvUsersInGroup);
             this.Controls.Add(this.btnCloseTabPage);
             this.Controls.Add(this.txtMessage);
@@ -154,6 +204,7 @@
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "ucChatWindow";
             this.Size = new System.Drawing.Size(651, 385);
+            this.materialContextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -166,5 +217,9 @@
         private MaterialSkin.Controls.MaterialFlatButton btnCloseTabPage;
         private MaterialSkin.Controls.MaterialListView lvUsersInGroup;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        private MaterialSkin.Controls.MaterialFlatButton btnAddUserToGroup;
+        private MaterialSkin.Controls.MaterialContextMenuStrip materialContextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }
