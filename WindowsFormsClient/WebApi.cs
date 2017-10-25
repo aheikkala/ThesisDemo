@@ -56,7 +56,7 @@ namespace ThesisDemo
 
         public void AddGroup(int userID, Group data)
         {
-            //var result = client.PostAsync<Group>("", data).Result;
+            var result = client.PostAsJsonAsync("http://localhost:19216/api/user/{userId:int}/group", data).Result;
         }
 
 
