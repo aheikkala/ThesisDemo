@@ -42,8 +42,8 @@ namespace ThesisDemo
         public class MeContext : DbContext
         {
 
-            public MeContext() : base(@"Data Source=DESKTOP-542OICS\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
-            //public MeContext() : base(@"Data Source=PII-PARTJUH\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
+            //public MeContext() : base(@"Data Source=DESKTOP-542OICS\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
+            public MeContext() : base(@"Data Source=PII-PARTJUH\SQLEXPRESS;Initial Catalog=ThesisDemoDb;Integrated Security=True") {}
 
             //Entity set:
             public DbSet<Message> Messages { get; set; }

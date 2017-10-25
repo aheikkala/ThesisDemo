@@ -15,6 +15,12 @@ namespace ThesisDemo
             public string Name { get; set; }
         }
 
+        public class User
+        {
+            public int ID { get; set; }
+            public string Name { get; set; }
+        }
+
         private HttpClient client;
 
         public WebApi()
@@ -35,6 +41,24 @@ namespace ThesisDemo
             ////client.PutAsync<Group>()
         }
 
-       
+        public User[] GetAllUsers()
+        {
+            var result = client.GetAsync("http://localhost:19216/api/User").Result;
+
+            if (result.IsSuccessStatusCode)
+            {
+               return result.Content.ReadAsAsync<User[]>().Result;
+               
+            }
+
+            return null;
+        }
+
+        public void AddGroup(int userID, Group data)
+        {
+            //var result = client.PostAsync<Group>("", data).Result;
+        }
+
+
     }
 }

@@ -13,18 +13,20 @@ namespace ThesisDemo
 {
     public partial class WinFormsClient : MaterialForm
     {
-        private Int32 UserID { get; set; }
-        private String UserName { get; set; }
+        private Int32 UserID;
+        private String UserName;
         //private String[] Users = new String[] { "User 1", "User 2", "User 3" };
-        private IHubProxy HubProxy { get; set; }
+        private IHubProxy HubProxy;
         //const string ServerURI = "http://localhost:8080/signalr";
         const string ServerURI = "http://localhost:19216/signalr";
-        private HubConnection Connection { get; set; }
-        private readonly MeContext _db = new MeContext();
+        private HubConnection Connection;
+        private readonly MeContext _db = new MeContext(); //VÄLIAIKAISESTI
+        private WebApi webApi;
 
         public WinFormsClient()
         {
             InitializeComponent();
+            webApi = new WebApi();
 
             //theme:
             MaterialSkinManager skinManager = MaterialSkinManager.Instance;
@@ -33,9 +35,11 @@ namespace ThesisDemo
             skinManager.ColorScheme = new ColorScheme(Primary.Green600, Primary.Green600, Primary.BlueGrey500, Accent.Orange700, TextShade.WHITE);
             //Primary.BlueGrey900 vakio
 
-            var lstUsers = (from u in _db.Users select new { u.ID, u.UserName }).ToList();
-            comboBoxSelectUser.DataSource = lstUsers;
-            comboBoxSelectUser.DisplayMember = "UserName";
+            //var lstUsers = (from u in _db.Users select new { u.ID, u.UserName }).ToList();
+            //comboBoxSelectUser.DataSource = lstUsers;
+
+            comboBoxSelectUser.DataSource = webApi.GetAllUsers();
+            comboBoxSelectUser.DisplayMember = "Name";
             comboBoxSelectUser.ValueMember = "ID";
             //comboBoxSelectUser.SelectedIndex = 0;
         }
@@ -110,7 +114,7 @@ namespace ThesisDemo
                 //No connection: Don't enable Send button or show chat UI
                 return;
             }
-            //State oject stores data to be transmitted to the server 
+            //State object stores data to be transmitted to the server 
             HubProxy["userName"] = UserName;
 
             //Activate UI
