@@ -13,12 +13,12 @@ namespace ThesisDemo
 {
     public partial class WinFormsClient : MaterialForm
     {
-
         private Int32 UserID { get; set; }
         private String UserName { get; set; }
         //private String[] Users = new String[] { "User 1", "User 2", "User 3" };
         private IHubProxy HubProxy { get; set; }
-        const string ServerURI = "http://localhost:8080/signalr";
+        //const string ServerURI = "http://localhost:8080/signalr";
+        const string ServerURI = "http://localhost:19216/signalr";
         private HubConnection Connection { get; set; }
         private readonly MeContext _db = new MeContext();
 
