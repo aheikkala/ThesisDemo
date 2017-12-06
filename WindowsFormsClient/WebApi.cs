@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,9 @@ namespace ThesisDemo
 {
     class WebApi
     {
-        public class Group
+
+        //data transfer objects:
+        public class GroupData
         {
             public int ID { get; set; }
             public string Name { get; set; }
@@ -21,7 +24,7 @@ namespace ThesisDemo
             public string Name { get; set; }
         }
 
-        private HttpClient client;
+        private static HttpClient client;
 
         public WebApi()
         {
@@ -54,9 +57,18 @@ namespace ThesisDemo
             return null;
         }
 
-        public void AddGroup(int userID, Group data)
+        public static async Task<HttpStatusCode> AddGroup(int userID, string groupName)
         {
-            var result = client.PostAsJsonAsync("http://localhost:19216/api/user/{userId:int}/group", data).Result;
+
+            var group = new GroupData
+            {
+                Name = groupName
+            };
+
+            var result = await client.PostAsJsonAsync($"http://localhost:19216/api/user/{userID}/group", group);
+            result.EnsureSuccessStatusCode();
+
+            return result.StatusCode;
         }
 
 

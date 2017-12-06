@@ -8,25 +8,27 @@ using MaterialSkin.Animations;
 using MaterialSkin;
 using static ThesisDemo.DatabaseConnection;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ThesisDemo
 {
     public partial class WinFormsClient : MaterialForm
     {
-        private Int32 UserID;
-        private String UserName;
-        //private String[] Users = new String[] { "User 1", "User 2", "User 3" };
-        private IHubProxy HubProxy;
+        private int _userID;
+        private string _userName;
+        private IHubProxy _hubProxy;
         //const string ServerURI = "http://localhost:8080/signalr";
-        const string ServerURI = "http://localhost:19216/signalr";
-        private HubConnection Connection;
+        private const string _serverURI = "http://localhost:19216/signalr";
+        private HubConnection _connection;
         private readonly MeContext _db = new MeContext(); //VÄLIAIKAISESTI
-        private WebApi webApi;
+        private WebApi _webApi;
 
         public WinFormsClient()
         {
             InitializeComponent();
-            webApi = new WebApi();
+            _webApi = new WebApi();
 
             //theme:
             MaterialSkinManager skinManager = MaterialSkinManager.Instance;
@@ -38,7 +40,7 @@ namespace ThesisDemo
             //var lstUsers = (from u in _db.Users select new { u.ID, u.UserName }).ToList();
             //comboBoxSelectUser.DataSource = lstUsers;
 
-            comboBoxSelectUser.DataSource = webApi.GetAllUsers();
+            comboBoxSelectUser.DataSource = _webApi.GetAllUsers();
             comboBoxSelectUser.DisplayMember = "Name";
             comboBoxSelectUser.ValueMember = "ID";
             //comboBoxSelectUser.SelectedIndex = 0;
@@ -70,7 +72,7 @@ namespace ThesisDemo
             {
                 Data = message,
                 Timestamp = DateTime.Now,
-                User = _db.Users.Find(UserID)
+                User = _db.Users.Find(_userID)
             };
 
             var group = _db.Groups.Find(tcGroups.SelectedTab.Tag);
@@ -79,26 +81,26 @@ namespace ThesisDemo
             group.Messages.Add(msg);
             _db.SaveChanges();
 
-            HubProxy.Invoke("Send", message);
+            _hubProxy.Invoke("Send", message);
         }
 
         //Creates and connects the hub connection and hub proxy. 
         //This method is called asynchronously from SignInButton_Click.
         private async void ConnectAsync()
         {
-            Connection = new HubConnection(ServerURI, new Dictionary<string, string>
+            _connection = new HubConnection(_serverURI, new Dictionary<string, string>
             {
-                 { "UserName", UserName }
+                 { "UserName", _userName }
             });
 
-            Connection.Closed += Connection_Closed;
-            Connection.Reconnecting += Connection_Reconnecting;
-            Connection.Reconnected += Connection_Reconnected;
+            _connection.Closed += Connection_Closed;
+            _connection.Reconnecting += Connection_Reconnecting;
+            _connection.Reconnected += Connection_Reconnected;
 
-            HubProxy = Connection.CreateHubProxy("ChatHub");
+            _hubProxy = _connection.CreateHubProxy("ChatHub");
 
             //Handle incoming event from server: use Invoke to write to console from SignalR's thread
-            HubProxy.On<string, string, string>("AddMessage", (name, message, group) =>
+            _hubProxy.On<string, string, string>("AddMessage", (name, message, group) =>
                 this.Invoke((Action)(() =>
                     //RichTextBoxConsole.AppendText(String.Format("{0}: {1}" + Environment.NewLine, name, message))
                     WriteMessage(name, message, group)
@@ -106,7 +108,7 @@ namespace ThesisDemo
             );
             try
             {
-                await Connection.Start();
+                await _connection.Start();
             }
             catch (HttpRequestException)
             {
@@ -115,17 +117,17 @@ namespace ThesisDemo
                 return;
             }
             //State object stores data to be transmitted to the server 
-            HubProxy["userName"] = UserName;
+            _hubProxy["userName"] = _userName;
 
             //Activate UI
-            lblUserName.Text = UserName;
+            lblUserName.Text = _userName;
             lblUserName.Font = new System.Drawing.Font("Arial", 20);
 
             SignInPanel.Visible = false;
             ChatPanel.Visible = true;
             //btnSend.Enabled = true;
             //txtMessage.Focus();
-            RichTextBoxConsole.AppendText("Connected to server at " + ServerURI + Environment.NewLine);
+            RichTextBoxConsole.AppendText("Connected to server at " + _serverURI + Environment.NewLine);
 
             //var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
 
@@ -160,12 +162,12 @@ namespace ThesisDemo
             lvAllGroups.Items.Clear();
             ///lwAllGroups.Items.AddRange(GetStuff());
 
-            var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
+            var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == _userID);
 
             foreach (var item in user.Groups)
             {
                 lvAllGroups.Items.Add(new ListViewItem { Text = item.GroupName, Tag = item.ID.ToString() });
-                await HubProxy.Invoke("JoinGroup", item.GroupName); //JoinGroup returns void so no need to await?
+                await _hubProxy.Invoke("JoinGroup", item.GroupName); //JoinGroup returns void so no need to await?
             }
         }
 
@@ -217,10 +219,10 @@ namespace ThesisDemo
 
         private void SignInButton_Click(object sender, EventArgs e)
         {
-            UserID = (int)comboBoxSelectUser.SelectedValue;
-            UserName = comboBoxSelectUser.GetItemText(comboBoxSelectUser.SelectedItem);
+            _userID = (int)comboBoxSelectUser.SelectedValue;
+            _userName = comboBoxSelectUser.GetItemText(comboBoxSelectUser.SelectedItem);
             //Connect to server (use async method to avoid blocking UI thread)
-            if (!String.IsNullOrEmpty(UserName))
+            if (!string.IsNullOrEmpty(_userName))
             {
                 StatusText.Visible = true;
                 StatusText.Text = "Connecting to server...";
@@ -230,32 +232,35 @@ namespace ThesisDemo
 
         private void WinFormsClient_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Connection != null)
+            if (_connection != null)
             {
-                Connection.Stop();
-                Connection.Dispose();
+                _connection.Stop();
+                _connection.Dispose();
             }
         }
 
-        private void btnAddGroup_Click(object sender, EventArgs e)
+        private async void btnAddGroup_Click(object sender, EventArgs e)
         {
             if (txtAddGroup.Text != "")
             {
-                var group = new DatabaseConnection.Group
-                {
-                    GroupName = txtAddGroup.Text,
-                    CreationDate = DateTime.Now
-                };
+                //var group = new DatabaseConnection.Group
+                //{
+                //    GroupName = txtAddGroup.Text,
+                //    CreationDate = DateTime.Now
+                //};
 
-                var user = _db.Users.Find(UserID);
+                //var user = _db.Users.Find(_userID);
 
-                _db.Groups.Add(group);
-                //group.Users.Add(user);
+                //_db.Groups.Add(group);
 
-                user.Groups.Add(group);
-                _db.SaveChanges();
+                //user.Groups.Add(group);
+                //_db.SaveChanges();
 
-                HubProxy.Invoke("JoinGroup", txtAddGroup.Text);
+                //HttpStatusCode x = await AddGroup(_userID, txtAddGroup.Text);
+
+                await WebApi.AddGroup(_userID, txtAddGroup.Text);
+
+                await _hubProxy.Invoke("JoinGroup", txtAddGroup.Text);
 
                 txtAddGroup.Text = String.Empty;
                 txtAddGroup.Focus();
@@ -267,7 +272,7 @@ namespace ThesisDemo
         private void tcGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
             TabControl tab = sender as TabControl;
-            HubProxy["currentGroup"] = tab.SelectedTab.Text;
+            _hubProxy["currentGroup"] = tab.SelectedTab.Text;
 
             //Button btn = tab.SelectedTab.Controls["ucChatWindow"].Controls["btnSend"] as Button;
             //this.AcceptButton = btn;
@@ -286,7 +291,7 @@ namespace ThesisDemo
             if (uc != null) {
                 RichTextBox rtb = uc.Controls["RichTextBoxConsole"] as RichTextBox;
                 rtb.SelectionColor = SkinManager.GetPrimaryTextColor();
-                if (name == UserName)
+                if (name == _userName)
                 {
                     rtb.SelectionAlignment = HorizontalAlignment.Right;
                     rtb.SelectionColor = SkinManager.GetPrimaryTextColor();
