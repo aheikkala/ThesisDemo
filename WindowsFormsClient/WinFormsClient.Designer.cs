@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "testi",
             "sub1"}, -1);
             this.RichTextBoxConsole = new System.Windows.Forms.RichTextBox();
@@ -49,7 +49,6 @@
             this.StatusText = new System.Windows.Forms.Label();
             this.SignInButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.materialProgressBar1 = new MaterialSkin.Controls.MaterialProgressBar();
             this.ChatPanel.SuspendLayout();
             this.tcGroups.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -61,7 +60,7 @@
             this.RichTextBoxConsole.BackColor = System.Drawing.Color.GhostWhite;
             this.RichTextBoxConsole.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RichTextBoxConsole.Location = new System.Drawing.Point(0, 807);
-            this.RichTextBoxConsole.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RichTextBoxConsole.Margin = new System.Windows.Forms.Padding(4);
             this.RichTextBoxConsole.Name = "RichTextBoxConsole";
             this.RichTextBoxConsole.ReadOnly = true;
             this.RichTextBoxConsole.Size = new System.Drawing.Size(1640, 31);
@@ -75,7 +74,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ChatPanel.BackColor = System.Drawing.Color.Transparent;
-            this.ChatPanel.Controls.Add(this.materialProgressBar1);
             this.ChatPanel.Controls.Add(this.materialDivider1);
             this.ChatPanel.Controls.Add(this.lblUserStatus);
             this.ChatPanel.Controls.Add(this.lblUserName);
@@ -83,7 +81,7 @@
             this.ChatPanel.Controls.Add(this.tcGroups);
             this.ChatPanel.Controls.Add(this.RichTextBoxConsole);
             this.ChatPanel.Location = new System.Drawing.Point(0, 96);
-            this.ChatPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ChatPanel.Margin = new System.Windows.Forms.Padding(4);
             this.ChatPanel.Name = "ChatPanel";
             this.ChatPanel.Size = new System.Drawing.Size(1641, 843);
             this.ChatPanel.TabIndex = 4;
@@ -131,7 +129,7 @@
             this.materialTabSelector1.BaseTabControl = this.tcGroups;
             this.materialTabSelector1.Depth = 0;
             this.materialTabSelector1.Location = new System.Drawing.Point(32, 134);
-            this.materialTabSelector1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.materialTabSelector1.Margin = new System.Windows.Forms.Padding(4);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabSelector1.Name = "materialTabSelector1";
             this.materialTabSelector1.Size = new System.Drawing.Size(1575, 30);
@@ -146,7 +144,7 @@
             this.tcGroups.Controls.Add(this.tabPage1);
             this.tcGroups.Depth = 0;
             this.tcGroups.Location = new System.Drawing.Point(32, 164);
-            this.tcGroups.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tcGroups.Margin = new System.Windows.Forms.Padding(4);
             this.tcGroups.MouseState = MaterialSkin.MouseState.HOVER;
             this.tcGroups.Name = "tcGroups";
             this.tcGroups.SelectedIndex = 0;
@@ -162,7 +160,7 @@
             this.tabPage1.Controls.Add(this.btnAddGroup);
             this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(1570, 607);
             this.tabPage1.TabIndex = 0;
@@ -181,9 +179,9 @@
             this.lvAllGroups.FullRowSelect = true;
             this.lvAllGroups.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvAllGroups.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9});
+            listViewItem4});
             this.lvAllGroups.Location = new System.Drawing.Point(0, 0);
-            this.lvAllGroups.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvAllGroups.Margin = new System.Windows.Forms.Padding(4);
             this.lvAllGroups.MouseLocation = new System.Drawing.Point(-1, -1);
             this.lvAllGroups.MouseState = MaterialSkin.MouseState.OUT;
             this.lvAllGroups.MultiSelect = false;
@@ -211,7 +209,7 @@
             this.txtAddGroup.Depth = 0;
             this.txtAddGroup.Hint = "";
             this.txtAddGroup.Location = new System.Drawing.Point(8, 567);
-            this.txtAddGroup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAddGroup.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddGroup.MaxLength = 32767;
             this.txtAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
             this.txtAddGroup.Name = "txtAddGroup";
@@ -232,7 +230,7 @@
             this.btnAddGroup.Depth = 0;
             this.btnAddGroup.Icon = null;
             this.btnAddGroup.Location = new System.Drawing.Point(602, 574);
-            this.btnAddGroup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddGroup.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddGroup.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAddGroup.Name = "btnAddGroup";
             this.btnAddGroup.Primary = true;
@@ -253,7 +251,7 @@
             this.SignInPanel.Controls.Add(this.SignInButton);
             this.SignInPanel.Controls.Add(this.label1);
             this.SignInPanel.Location = new System.Drawing.Point(0, 96);
-            this.SignInPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SignInPanel.Margin = new System.Windows.Forms.Padding(4);
             this.SignInPanel.Name = "SignInPanel";
             this.SignInPanel.Size = new System.Drawing.Size(1641, 843);
             this.SignInPanel.TabIndex = 4;
@@ -262,7 +260,7 @@
             // 
             this.comboBoxSelectUser.FormattingEnabled = true;
             this.comboBoxSelectUser.Location = new System.Drawing.Point(14, 56);
-            this.comboBoxSelectUser.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxSelectUser.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxSelectUser.Name = "comboBoxSelectUser";
             this.comboBoxSelectUser.Size = new System.Drawing.Size(271, 28);
             this.comboBoxSelectUser.TabIndex = 7;
@@ -281,7 +279,7 @@
             // SignInButton
             // 
             this.SignInButton.Location = new System.Drawing.Point(296, 56);
-            this.SignInButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SignInButton.Margin = new System.Windows.Forms.Padding(4);
             this.SignInButton.Name = "SignInButton";
             this.SignInButton.Size = new System.Drawing.Size(118, 33);
             this.SignInButton.TabIndex = 5;
@@ -299,19 +297,6 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Enter user name:";
             // 
-            // materialProgressBar1
-            // 
-            this.materialProgressBar1.BackColor = System.Drawing.Color.Red;
-            this.materialProgressBar1.Depth = 0;
-            this.materialProgressBar1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialProgressBar1.Location = new System.Drawing.Point(638, 29);
-            this.materialProgressBar1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialProgressBar1.Name = "materialProgressBar1";
-            this.materialProgressBar1.Size = new System.Drawing.Size(948, 5);
-            this.materialProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.materialProgressBar1.TabIndex = 14;
-            this.materialProgressBar1.Visible = false;
-            // 
             // WinFormsClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -322,7 +307,7 @@
             this.ClientSize = new System.Drawing.Size(1641, 936);
             this.Controls.Add(this.ChatPanel);
             this.Controls.Add(this.SignInPanel);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(813, 873);
             this.Name = "WinFormsClient";
@@ -358,7 +343,6 @@
         private MaterialSkin.Controls.MaterialDivider materialDivider1;
         private MaterialSkin.Controls.MaterialLabel lblUserName;
         private MaterialSkin.Controls.MaterialLabel lblUserStatus;
-        private MaterialSkin.Controls.MaterialProgressBar materialProgressBar1;
     }
 }
 

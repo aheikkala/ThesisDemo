@@ -152,8 +152,6 @@ namespace ThesisDemo
 
         private async void UpdateGroups()
         {
-            //materialProgressBar1.Show();
-
             lvAllGroups.Items.Clear();
 
             var user = await _webApi.GetUser(_userID);
@@ -311,38 +309,56 @@ namespace ThesisDemo
 
         }
 
-        private void GetAllMessages(int groupID, string groupName)
+        private async void GetAllMessages(int groupID)
         {
-            TabPage tp = new TabPage(groupName) { Name = groupID.ToString(), Tag = groupID };
+            //TabPage tp = new TabPage(groupName) { Name = groupID.ToString(), Tag = groupID };
 
-            if (tcGroups.TabPages.ContainsKey(groupName)) { return; }
+            //if (tcGroups.TabPages.ContainsKey(groupName)) { return; }
+
+            //tcGroups.TabPages.Add(tp);
+            //tp.Controls.Add(new ucChatWindow() { ParentForm = this, BackColor = SkinManager.GetApplicationBackgroundColor(), Dock = DockStyle.Fill });
+
+            //tcGroups.SelectedTab = tp;
+
+            //var currentGroup = _db.Groups
+            //                        .Include("Messages.User")
+            //                        .SingleOrDefault(g => g.ID == groupID);
+
+            var currentGroup = await _webApi.GetGroup(groupID);
+
+            foreach (var item in currentGroup.Messages.OrderBy(m => m.TimeStamp))
+            {
+                WriteMessage(item.UserName, item.Message, groupID.ToString());
+            }
+
+
+            //UpdateUsersInGroup(groupID);
+        }
+
+        private void lvAllGroups_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListView lv = sender as ListView;
+            if (lv.SelectedItems.Count == 0) { return; }
+            //    if (lv.SelectedItems.Count == 1)
+            //{
+            //    ListViewItem item = lv.SelectedItems[0] as ListViewItem;
+            //    GetAllMessages(int.Parse(item.Tag.ToString()), item.Text);
+            //}
+
+            var item = lv.SelectedItems[0] as ListViewItem;
+
+
+            var tp = new TabPage(item.Text) { Name = item.Tag.ToString(), Tag = item.Tag };
+
+            if (tcGroups.TabPages.ContainsKey(item.Text)) { return; }
 
             tcGroups.TabPages.Add(tp);
             tp.Controls.Add(new ucChatWindow() { ParentForm = this, BackColor = SkinManager.GetApplicationBackgroundColor(), Dock = DockStyle.Fill });
 
             tcGroups.SelectedTab = tp;
 
-            var currentGroup = _db.Groups
-                                    .Include("Messages.User")
-                                    .SingleOrDefault(g => g.ID == groupID);
-
-            foreach (var item in currentGroup.Messages.OrderBy(m => m.Timestamp))
-            {
-                WriteMessage(item.User.UserName, item.Data, groupID.ToString());
-            }
-
-
-            UpdateUsersInGroup(groupID);
-        }
-
-        private void lvAllGroups_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            ListView lv = sender as ListView;
-            if (lv.SelectedItems.Count == 1)
-            {
-                ListViewItem item = lv.SelectedItems[0] as ListViewItem;
-                GetAllMessages(int.Parse(item.Tag.ToString()), item.Text);
-            }
+            UpdateUsersInGroup(int.Parse(item.Tag.ToString()));
+            GetAllMessages(int.Parse(item.Tag.ToString()));
         }
 
         public List<User> GetUsersToAdd(string groupName)
