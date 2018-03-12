@@ -31,7 +31,7 @@ namespace ThesisDemo
             _webApi = new WebApi();
 
             //theme:
-            MaterialSkinManager skinManager = MaterialSkinManager.Instance;
+            var skinManager = MaterialSkinManager.Instance;
             skinManager.AddFormToManage(this);
             skinManager.Theme = MaterialSkinManager.Themes.DARK;
             skinManager.ColorScheme = new ColorScheme(Primary.Green600, Primary.Green600, Primary.BlueGrey500, Accent.Orange700, TextShade.WHITE);
@@ -44,6 +44,8 @@ namespace ThesisDemo
             comboBoxSelectUser.DisplayMember = "Name";
             comboBoxSelectUser.ValueMember = "ID";
             //comboBoxSelectUser.SelectedIndex = 0;
+
+            Application.EnableVisualStyles(); //for progress bar...
         }
 
         //private void btnSend_Click(object sender, EventArgs e)
@@ -66,22 +68,25 @@ namespace ThesisDemo
         //    txtMessage.Focus();
         //}
 
-        public void SendMessage(string message)
+        public async void SendMessage(string message)
         {
-            var msg = new DatabaseConnection.Message
-            {
-                Data = message,
-                Timestamp = DateTime.Now,
-                User = _db.Users.Find(_userID)
-            };
 
-            var group = _db.Groups.Find(tcGroups.SelectedTab.Tag);
+            await _webApi.AddMessage(_userID, (int)tcGroups.SelectedTab.Tag, message);
 
-            _db.Messages.Add(msg);
-            group.Messages.Add(msg);
-            _db.SaveChanges();
+            //var msg = new DatabaseConnection.Message
+            //{
+            //    Data = message,
+            //    Timestamp = DateTime.Now,
+            //    User = _db.Users.Find(_userID)
+            //};
 
-            _hubProxy.Invoke("Send", message);
+            //var group = _db.Groups.Find(tcGroups.SelectedTab.Tag);
+
+            //_db.Messages.Add(msg);
+            //group.Messages.Add(msg);
+            //_db.SaveChanges();
+
+            //_hubProxy.Invoke("Send", message);
         }
 
         //Creates and connects the hub connection and hub proxy. 
@@ -145,36 +150,27 @@ namespace ThesisDemo
             //}
         }
 
-        public ListViewItem[] GetStuff()
-        {
-            var results = from g in _db.Groups
-                          select new ListViewItem
-                          {
-                              Text = g.GroupName,
-                              Tag = g.ID.ToString()
-                          };
-
-            return results.ToArray();
-        }
-
         private async void UpdateGroups()
         {
-            lvAllGroups.Items.Clear();
-            ///lwAllGroups.Items.AddRange(GetStuff());
+            //materialProgressBar1.Show();
 
-            var user = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == _userID);
+            lvAllGroups.Items.Clear();
+
+            var user = await _webApi.GetUser(_userID);
+
+            if (user == null) { return; }
 
             foreach (var item in user.Groups)
             {
-                lvAllGroups.Items.Add(new ListViewItem { Text = item.GroupName, Tag = item.ID.ToString() });
-                await _hubProxy.Invoke("JoinGroup", item.GroupName); //JoinGroup returns void so no need to await?
+                lvAllGroups.Items.Add(new ListViewItem { Text = item.Name, Tag = item.ID });
+                await _hubProxy.Invoke("JoinGroup", item.ID.ToString()); 
             }
         }
 
         //TÄMÄ PITÄÄ VAIHTAA ID:LLE! MUUALTAKIN...
-        private void UpdateUsersInGroup(string groupName)
+        private async void UpdateUsersInGroup(int groupID)
         {
-            UserControl uc = tcGroups.TabPages[groupName].Controls["ucChatWindow"] as UserControl;
+            UserControl uc = tcGroups.TabPages[groupID].Controls["ucChatWindow"] as UserControl;
             ListView lv = uc.Controls["lvUsersInGroup"] as ListView;
             //MaterialContextMenuStrip cms = uc.ContextMenuStrip as MaterialContextMenuStrip;
 
@@ -183,12 +179,12 @@ namespace ThesisDemo
             //var users = _db.Users.Include("Groups").Where(u => u.Groups.Find(g => g.GroupName == groupName));
             //var group = _db.Groups.i.Where(g => g.GroupName == groupName);
 
-            var group = _db.Groups.Include("Users").SingleOrDefault(x => x.GroupName == groupName);
-
+            //var group = _db.Groups.Include("Users").SingleOrDefault(x => x.GroupName == groupName);
+            var group = await _webApi.GetGroup(groupID);
 
             foreach (var item in group.Users)
             {
-                lv.Items.Add(new ListViewItem { Text = item.UserName, Tag = item.ID.ToString() });
+                lv.Items.Add(new ListViewItem { Text = item.Name, Tag = item.ID.ToString(), Group = ((item.Online == true) ? lv.Groups["Online"] : lv.Groups["Offline"]) });
             }
         }
 
@@ -286,7 +282,11 @@ namespace ThesisDemo
 
         private void WriteMessage(string name, string message, string group)
         {
-            UserControl uc = tcGroups.TabPages[group].Controls["ucChatWindow"] as UserControl;
+            var tp = tcGroups.TabPages[group] as TabPage;
+
+            if (tp == null) { return; }
+
+            var uc = tp.Controls["ucChatWindow"] as UserControl;
 
             if (uc != null) {
                 RichTextBox rtb = uc.Controls["RichTextBoxConsole"] as RichTextBox;
@@ -313,7 +313,7 @@ namespace ThesisDemo
 
         private void GetAllMessages(int groupID, string groupName)
         {
-            TabPage tp = new TabPage(groupName) { Name = groupName, Tag = groupID };
+            TabPage tp = new TabPage(groupName) { Name = groupID.ToString(), Tag = groupID };
 
             if (tcGroups.TabPages.ContainsKey(groupName)) { return; }
 
@@ -328,11 +328,11 @@ namespace ThesisDemo
 
             foreach (var item in currentGroup.Messages.OrderBy(m => m.Timestamp))
             {
-                WriteMessage(item.User.UserName, item.Data, groupName);
+                WriteMessage(item.User.UserName, item.Data, groupID.ToString());
             }
 
 
-            UpdateUsersInGroup(groupName);
+            UpdateUsersInGroup(groupID);
         }
 
         private void lvAllGroups_MouseDoubleClick(object sender, MouseEventArgs e)

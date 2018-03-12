@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Arttu");
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Online", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Offline", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Arttu");
             this.RichTextBoxConsole = new System.Windows.Forms.RichTextBox();
             this.txtMessage = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.btnSend = new MaterialSkin.Controls.MaterialRaisedButton();
@@ -76,7 +78,7 @@
             this.txtMessage.SelectedText = "";
             this.txtMessage.SelectionLength = 0;
             this.txtMessage.SelectionStart = 0;
-            this.txtMessage.Size = new System.Drawing.Size(327, 36);
+            this.txtMessage.Size = new System.Drawing.Size(327, 32);
             this.txtMessage.TabIndex = 8;
             this.txtMessage.TabStop = false;
             this.txtMessage.UseSystemPasswordChar = false;
@@ -94,7 +96,7 @@
             this.btnSend.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSend.Name = "btnSend";
             this.btnSend.Primary = true;
-            this.btnSend.Size = new System.Drawing.Size(85, 36);
+            this.btnSend.Size = new System.Drawing.Size(75, 36);
             this.btnSend.TabIndex = 7;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = false;
@@ -112,7 +114,7 @@
             this.btnCloseTabPage.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCloseTabPage.Name = "btnCloseTabPage";
             this.btnCloseTabPage.Primary = false;
-            this.btnCloseTabPage.Size = new System.Drawing.Size(39, 36);
+            this.btnCloseTabPage.Size = new System.Drawing.Size(36, 36);
             this.btnCloseTabPage.TabIndex = 9;
             this.btnCloseTabPage.Text = "X";
             this.btnCloseTabPage.UseVisualStyleBackColor = true;
@@ -126,9 +128,16 @@
             this.lvUsersInGroup.Depth = 0;
             this.lvUsersInGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
             this.lvUsersInGroup.FullRowSelect = true;
+            listViewGroup1.Header = "Online";
+            listViewGroup1.Name = "Online";
+            listViewGroup2.Header = "Offline";
+            listViewGroup2.Name = "Offline";
+            this.lvUsersInGroup.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2});
             this.lvUsersInGroup.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvUsersInGroup.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
             this.lvUsersInGroup.Location = new System.Drawing.Point(4, 48);
             this.lvUsersInGroup.MouseLocation = new System.Drawing.Point(-1, -1);
             this.lvUsersInGroup.MouseState = MaterialSkin.MouseState.OUT;
@@ -147,6 +156,7 @@
             // 
             // btnAddUserToGroup
             // 
+            this.btnAddUserToGroup.AutoSize = true;
             this.btnAddUserToGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAddUserToGroup.Depth = 0;
             this.btnAddUserToGroup.Icon = null;
@@ -155,7 +165,7 @@
             this.btnAddUserToGroup.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAddUserToGroup.Name = "btnAddUserToGroup";
             this.btnAddUserToGroup.Primary = false;
-            this.btnAddUserToGroup.Size = new System.Drawing.Size(205, 36);
+            this.btnAddUserToGroup.Size = new System.Drawing.Size(80, 36);
             this.btnAddUserToGroup.TabIndex = 11;
             this.btnAddUserToGroup.Text = "+ Add";
             this.btnAddUserToGroup.UseVisualStyleBackColor = true;
@@ -171,21 +181,21 @@
             this.toolStripMenuItem2});
             this.materialContextMenuStrip1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialContextMenuStrip1.Name = "materialContextMenuStrip1";
-            this.materialContextMenuStrip1.Size = new System.Drawing.Size(271, 110);
+            this.materialContextMenuStrip1.Size = new System.Drawing.Size(244, 64);
             this.materialContextMenuStrip1.Text = "Invite user:";
             this.materialContextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.materialContextMenuStrip1_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(243, 30);
             this.toolStripMenuItem1.Text = "toolStripMenuItem1";
             this.toolStripMenuItem1.ToolTipText = "Testi1";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(270, 34);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(243, 30);
             this.toolStripMenuItem2.Text = "toolStripMenuItem2";
             this.toolStripMenuItem2.ToolTipText = "Testi2";
             // 
