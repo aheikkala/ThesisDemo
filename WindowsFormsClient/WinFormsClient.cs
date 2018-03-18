@@ -77,7 +77,7 @@ namespace ThesisDemo
         {
             _connection = new HubConnection(_serverURI, new Dictionary<string, string>
             {
-                 { "UserName", _userName }
+                 { "UserID", _userID.ToString() }
             });
 
             _connection.Closed += Connection_Closed;
@@ -88,11 +88,24 @@ namespace ThesisDemo
 
             //Handle incoming event from server: use Invoke to write to console from SignalR's thread
             _hubProxy.On<string, string, string>("AddMessage", (name, message, group) =>
-                this.Invoke((Action)(() =>
-                    //RichTextBoxConsole.AppendText(String.Format("{0}: {1}" + Environment.NewLine, name, message))
+                Invoke((Action)(() =>
                     WriteMessage(name, message, group)
                 ))
             );
+
+            _hubProxy.On("UpdateGroups", () =>
+                Invoke((Action)(() =>
+                    UpdateGroups()
+                ))
+            );
+
+            _hubProxy.On<int>("UpdateUsersInGroup", (groupID) =>
+                Invoke((Action)(() =>
+                    UpdateUsersInGroup(groupID)
+                ))
+            );
+
+            // Start the server connection asynchronously to avoid blocking UI thread.
             try
             {
                 await _connection.Start();
@@ -143,22 +156,21 @@ namespace ThesisDemo
             foreach (var item in user.Groups)
             {
                 lvAllGroups.Items.Add(new ListViewItem { Text = item.Name, Tag = item.ID });
-                await _hubProxy.Invoke("JoinGroup", item.ID.ToString()); 
+                await _hubProxy.Invoke("JoinGroup", item.ID.ToString());
             }
         }
 
         private async void UpdateUsersInGroup(int groupID)
         {
-            UserControl uc = tcGroups.TabPages[groupID.ToString()].Controls["ucChatWindow"] as UserControl;
-            ListView lv = uc.Controls["lvUsersInGroup"] as ListView;
-            //MaterialContextMenuStrip cms = uc.ContextMenuStrip as MaterialContextMenuStrip;
+            var tp = tcGroups.TabPages[groupID.ToString()] as TabPage;
+
+            if (tp == null) { return; }
+
+            var uc = tp.Controls["ucChatWindow"] as UserControl;
+            var lv = uc.Controls["lvUsersInGroup"] as ListView;
 
             lv.Items.Clear();
-            //VARMAAN PITÄÄ MUUTTAA DB MALLIA
-            //var users = _db.Users.Include("Groups").Where(u => u.Groups.Find(g => g.GroupName == groupName));
-            //var group = _db.Groups.i.Where(g => g.GroupName == groupName);
 
-            //var group = _db.Groups.Include("Users").SingleOrDefault(x => x.GroupName == groupName);
             var group = await _webApi.GetGroup(groupID);
 
             foreach (var item in group.Users)
@@ -196,8 +208,7 @@ namespace ThesisDemo
         {
             _userID = (int)comboBoxSelectUser.SelectedValue;
             _userName = comboBoxSelectUser.GetItemText(comboBoxSelectUser.SelectedItem);
-            //Connect to server (use async method to avoid blocking UI thread)
-            if (!string.IsNullOrEmpty(_userName))
+            if (_userID != 0 && !string.IsNullOrEmpty(_userName))
             {
                 StatusText.Visible = true;
                 StatusText.Text = "Connecting to server...";
@@ -252,9 +263,10 @@ namespace ThesisDemo
             //Button btn = tab.SelectedTab.Controls["ucChatWindow"].Controls["btnSend"] as Button;
             //this.AcceptButton = btn;
 
-            
+
             //set accept button to selected tab
-            if (tab.SelectedTab.Controls.Find("ucChatWindow", true).Length != 0) {
+            if (tab.SelectedTab.Controls.Find("ucChatWindow", true).Length != 0)
+            {
                 this.AcceptButton = tab.SelectedTab.Controls["ucChatWindow"].Controls["btnSend"] as Button;
             }
         }
@@ -267,7 +279,8 @@ namespace ThesisDemo
 
             var uc = tp.Controls["ucChatWindow"] as UserControl;
 
-            if (uc != null) {
+            if (uc != null)
+            {
                 RichTextBox rtb = uc.Controls["RichTextBoxConsole"] as RichTextBox;
                 rtb.SelectionColor = SkinManager.GetPrimaryTextColor();
                 if (name == _userName)
@@ -350,7 +363,7 @@ namespace ThesisDemo
         //    //var users = _db.Users.Except(group.Users);
         //    var users = _db.Users;
         //    return users.ToList();
-            
+
         //}
 
     }
