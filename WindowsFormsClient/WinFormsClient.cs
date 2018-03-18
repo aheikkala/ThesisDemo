@@ -22,7 +22,7 @@ namespace ThesisDemo
         //const string ServerURI = "http://localhost:8080/signalr";
         private const string _serverURI = "http://localhost:19216/signalr";
         private HubConnection _connection;
-        private readonly MeContext _db = new MeContext(); //VÄLIAIKAISESTI
+        //private readonly MeContext _db = new MeContext(); //VÄLIAIKAISESTI
         private WebApi _webApi;
 
         public WinFormsClient()
@@ -43,9 +43,7 @@ namespace ThesisDemo
             comboBoxSelectUser.DataSource = _webApi.GetAllUsers();
             comboBoxSelectUser.DisplayMember = "Name";
             comboBoxSelectUser.ValueMember = "ID";
-            //comboBoxSelectUser.SelectedIndex = 0;
 
-            Application.EnableVisualStyles(); //for progress bar...
         }
 
         //private void btnSend_Click(object sender, EventArgs e)
@@ -68,26 +66,10 @@ namespace ThesisDemo
         //    txtMessage.Focus();
         //}
 
-        public async void SendMessage(string message)
-        {
-
-            await _webApi.AddMessage(_userID, (int)tcGroups.SelectedTab.Tag, message);
-
-            //var msg = new DatabaseConnection.Message
-            //{
-            //    Data = message,
-            //    Timestamp = DateTime.Now,
-            //    User = _db.Users.Find(_userID)
-            //};
-
-            //var group = _db.Groups.Find(tcGroups.SelectedTab.Tag);
-
-            //_db.Messages.Add(msg);
-            //group.Messages.Add(msg);
-            //_db.SaveChanges();
-
-            //_hubProxy.Invoke("Send", message);
-        }
+        //public async void SendMessage(string message)
+        //{
+        //    await _webApi.AddMessage(_userID, (int)tcGroups.SelectedTab.Tag, message);
+        //}
 
         //Creates and connects the hub connection and hub proxy. 
         //This method is called asynchronously from SignInButton_Click.
@@ -165,10 +147,9 @@ namespace ThesisDemo
             }
         }
 
-        //TÄMÄ PITÄÄ VAIHTAA ID:LLE! MUUALTAKIN...
         private async void UpdateUsersInGroup(int groupID)
         {
-            UserControl uc = tcGroups.TabPages[groupID].Controls["ucChatWindow"] as UserControl;
+            UserControl uc = tcGroups.TabPages[groupID.ToString()].Controls["ucChatWindow"] as UserControl;
             ListView lv = uc.Controls["lvUsersInGroup"] as ListView;
             //MaterialContextMenuStrip cms = uc.ContextMenuStrip as MaterialContextMenuStrip;
 
@@ -252,7 +233,7 @@ namespace ThesisDemo
 
                 //HttpStatusCode x = await AddGroup(_userID, txtAddGroup.Text);
 
-                await WebApi.AddGroup(_userID, txtAddGroup.Text);
+                await _webApi.AddGroup(_userID, txtAddGroup.Text);
 
                 await _hubProxy.Invoke("JoinGroup", txtAddGroup.Text);
 
@@ -353,7 +334,7 @@ namespace ThesisDemo
             if (tcGroups.TabPages.ContainsKey(item.Text)) { return; }
 
             tcGroups.TabPages.Add(tp);
-            tp.Controls.Add(new ucChatWindow() { ParentForm = this, BackColor = SkinManager.GetApplicationBackgroundColor(), Dock = DockStyle.Fill });
+            tp.Controls.Add(new ucChatWindow(_userID, (int)item.Tag) { BackColor = SkinManager.GetApplicationBackgroundColor(), Dock = DockStyle.Fill });
 
             tcGroups.SelectedTab = tp;
 
@@ -361,16 +342,16 @@ namespace ThesisDemo
             GetAllMessages(int.Parse(item.Tag.ToString()));
         }
 
-        public List<User> GetUsersToAdd(string groupName)
-        {
-            //var users = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
-            var group = _db.Groups.SingleOrDefault(x => x.GroupName == groupName);
-            //var users = _db.Users.Where(x => !group.Users.Contains(x)).ToList();
-            //var users = _db.Users.Except(group.Users);
-            var users = _db.Users;
-            return users.ToList();
+        //public List<User> GetUsersToAdd(string groupName)
+        //{
+        //    //var users = _db.Users.Include("Groups").SingleOrDefault(u => u.ID == UserID);
+        //    var group = _db.Groups.SingleOrDefault(x => x.GroupName == groupName);
+        //    //var users = _db.Users.Where(x => !group.Users.Contains(x)).ToList();
+        //    //var users = _db.Users.Except(group.Users);
+        //    var users = _db.Users;
+        //    return users.ToList();
             
-        }
+        //}
 
     }
 }

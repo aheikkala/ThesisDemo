@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
+using System.Net.Http; // HTTP stack library
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,29 +42,20 @@ namespace ThesisDemo
         public WebApi()
         {
             client = new HttpClient();
-            ////client.DefaultRequestHeaders.Accept = new System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.MediaTypeWithQualityHeaderValue>("application/json");
-            ////async,await
-            //var result = client.GetAsync("http://localhost:19216/api/group").Result;
-            //if (result.IsSuccessStatusCode)
-            //{
-            //    var groups = result.Content.ReadAsAsync<Group[]>().Result;
-            //    foreach (var g in groups)
-            //    {
+            //client.BaseAddress = new Uri("http://localhost:19216");
 
-            //    }
-            //}
-
-            ////client.PutAsync<Group>()
+            //client.DefaultRequestHeaders.Accept = new System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.MediaTypeWithQualityHeaderValue>("application/json");
         }
 
         public UserData[] GetAllUsers()
         {
+            // Sever returns JASON by default.
             var result = client.GetAsync("http://localhost:19216/api/User").Result;
 
             if (result.IsSuccessStatusCode)
             {
-               return result.Content.ReadAsAsync<UserData[]>().Result;
-               
+                // Deserialize JASON to an array of strongly typed object.
+                return result.Content.ReadAsAsync<UserData[]>().Result;
             }
 
             return null;
@@ -96,7 +87,22 @@ namespace ThesisDemo
             return null;
         }
 
-        public static async Task<HttpStatusCode> AddGroup(int userID, string groupName)
+        public async Task<HttpStatusCode> AddUserToGroup(int groupID, int userID)
+        {
+            var group = new GroupData
+            {
+                ID = groupID,
+                Users = new List<UserData> { new UserData { ID = userID } }
+            };
+
+            var result = await client.PutAsJsonAsync("http://localhost:19216/api/group/", group);
+            result.EnsureSuccessStatusCode();
+
+            return result.StatusCode;
+
+        }
+
+        public async Task<HttpStatusCode> AddGroup(int userID, string groupName)
         {
 
             var group = new GroupData

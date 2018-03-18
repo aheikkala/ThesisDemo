@@ -13,27 +13,31 @@ namespace ThesisDemo
 {
     public partial class ucChatWindow : UserControl
     {
-        public new WinFormsClient ParentForm { get; set; }
+        //public new WinFormsClient ParentForm { get; set; }
+        private WebApi _webApi;
+        private int _iUserID;
+        private int _iGroupID;
 
-        public ucChatWindow()
+        public ucChatWindow(int iUserID, int iGroupID)
         {
-
             InitializeComponent();
-            //SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            //this.BackColor = Color.Transparent
-            //Dock = DockStyle.Fill;
+            _webApi = new WebApi();
+            _iGroupID = iGroupID;
+            _iUserID = iUserID;
             RichTextBoxConsole.BackColor = MaterialSkinManager.Instance.GetApplicationBackgroundColor();
             lvUsersInGroup.BackColor = MaterialSkinManager.Instance.GetApplicationBackgroundColor();
-
-            
-
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
+        private async void btnSend_Click(object sender, EventArgs e)
         {
             //tämä paremmin...
-            ParentForm = this.ParentForm;
-            ParentForm.SendMessage(txtMessage.Text);
+            //ParentForm = this.ParentForm;
+            //ParentForm.SendMessage(txtMessage.Text);
+
+            if (txtMessage.Text != string.Empty)
+            {
+                await _webApi.AddMessage(_iUserID, _iGroupID, txtMessage.Text);
+            }
 
             txtMessage.Text = String.Empty;
             txtMessage.Focus();
@@ -52,20 +56,23 @@ namespace ThesisDemo
         private void btnAddUserToGroup_Click(object sender, EventArgs e)
         {
             //ParentForm = this.ParentForm;
-            var users = ParentForm.GetUsersToAdd(Parent.Name.ToString());
+            //var users = ParentForm.GetUsersToAdd(Parent.Name.ToString());
+
+            var users = _webApi.GetAllUsers();
 
             //materialContextMenuStrip1.Show(this.btnAddUserToGroup.PointToScreen(btnAddUserToGroup.Bounds.Location));
             materialContextMenuStrip1.Items.Clear();
-            foreach (var user in users)
+            foreach (var user in users.Where(x => !x.Groups.Exists(g=> g.ID == _iGroupID)).ToList())
             {
-                materialContextMenuStrip1.Items.Add(new ToolStripMenuItem { Name = user.UserName, Tag = user.ID, Text = user.UserName});
+                materialContextMenuStrip1.Items.Add(new ToolStripMenuItem { Name = user.Name, Tag = user.ID, Text = user.Name});
             }
             materialContextMenuStrip1.Show(Control.MousePosition);
         }
 
-        private void materialContextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private async void materialContextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            
+            var iUserToAdd = (int)e.ClickedItem.Tag;
+            await _webApi.AddUserToGroup(_iGroupID, iUserToAdd);
         }
     }
 }
